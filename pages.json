@@ -1,9 +1,18 @@
 {
+	"easycom": {
+		"echarts": "@/components/echarts-uniapp/echarts-uniapp.vue"
+	},
 	"pages": [
 		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "世界地图册"
+			}
+		},
+		{
+			"path": "pages/chooseCountry/chooseCountry",
+			"style": {
+				"navigationBarTitleText": "选择国家"
 			}
 		}
 	],
