@@ -1,7 +1,4 @@
 {
-	"easycom": {
-		"echarts": "@/components/echarts-uniapp/echarts-uniapp.vue"
-	},
 	"pages": [
 		{
 			"path": "pages/index/index",

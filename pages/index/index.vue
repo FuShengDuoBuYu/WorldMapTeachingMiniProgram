@@ -5,7 +5,9 @@
 			<uni-combox :candidates="candidates" placeholder="请输入要查找的内容" v-model="searchItem"></uni-combox>
 			<button type="primary" hover-class="button-hover" @click="goto('/pages/chooseCountry/chooseCountry')">国家/国旗</button>
 		</view>
-		<worldMapChartVue></worldMapChartVue>
+		<view style="width: 100%;">
+			<worldMapChartVue></worldMapChartVue>
+		</view>
 	</view>
 </template>
 
