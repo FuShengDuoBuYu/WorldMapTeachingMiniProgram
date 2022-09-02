@@ -1,17 +1,26 @@
 <template>
-	<view class="content">
+	<view>
+		<image class="bg" src="../static/index_bg.webp"></image>
+		<view style="display: flex;justify-content: space-between;margin: 3%;">
+			<text style="font-size: xx-large;color: beige;font-weight: bold;">世界地图册</text>
+			<text style="font-size: x-large;color: beige;font-weight: lighter;">World Map</text>
+		</view>
 		<!-- 顶部搜索框和按钮 -->
-		<view style="display: flex;width:100%;justify-content: center;">
-			<uni-combox style="margin-left: 10%;" :candidates="candidates" placeholder="请输入要查找的内容" v-model="searchItem"></uni-combox>
-			<button style="margin-left: 10%;" size="mini" type="primary" hover-class="button-hover" @click="goto('/pages/chooseCountry/chooseCountry')">国家</button>
+		<view style="display: flex;width:100%;justify-content:center;margin:auto">
+			<uni-icons style="width: 10%;margin-left: 3%;" type="search" size="30"></uni-icons>
+			<uni-combox style="width: 60%;" :candidates="candidates" placeholder="请输入要查找的内容" v-model="searchItem"></uni-combox>
+			<button size="mini" style="background-color: bisque;" hover-class="button-hover" @click="goto('/pages/chooseCountry/chooseCountry')">国家</button>
 		</view>
 		<view style="width: 100%;">
 			<worldMapChartVue :chooseLocation="userChooseLoacation"></worldMapChartVue>
 		</view>
-		
-		<text>您当前选择的是</text>
-		<text style="font-size: x-large;color: red;">{{userChooseLoacation}}</text>
-		<country-items @showDialog='showTheDialog'></country-items>
+		<view style="display: flex;justify-content:space-around;">
+			<text>您当前选择的是</text>
+			<text style="font-size: x-large;color: red;">{{userChooseLoacation}}</text>
+		</view>
+		<view class="content">
+			<country-items @showDialog='showTheDialog'></country-items>
+		</view>
 		
 		
 		<!-- 遮罩透明层 -->
@@ -22,7 +31,6 @@
 		<!--content-->
 		<!--使用animation属性指定需要执行的动画-->  
 		<view class="drawer_box" v-if="showDialog">  
-		  
 		  <!--drawer content-->  
 		  <view class="drawer_title">{{title}}</view>  
 		  <view class="drawer_content">  
@@ -31,8 +39,6 @@
 		  </view>  
 		</view>
 	</view>
-	
-	
 </template>
 
 <script>
@@ -143,4 +149,16 @@
 		height: 65vh;  
 		overflow-y: scroll; /*超出父盒子高度可滚动*/  
 	}  
+	
+	.bg{
+		
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		
+		top: 0;
+		left: 0;
+		z-index: -1;
+		opacity: 0.8;
+	}
 </style>
