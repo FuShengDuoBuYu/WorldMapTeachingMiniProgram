@@ -46,11 +46,14 @@
 				options:chartOptions,
 			};
 		},
+		onLoad() {
+			console.log("收到");
+			
+		},
 		onReady() {
-			let regions = [];
-			this.options.geo.regions = regions;
-			this.chart.setOption(this.options);
-			this.$refs.mapChart.setChart(this.chart);
+			// this.options.geo.regions = regions;
+			// this.chart.setOption(this.options);
+			// this.$refs.mapChart.setChart(this.chart);
 		},
 		methods: {
 			//用户点击时要清除下region数据

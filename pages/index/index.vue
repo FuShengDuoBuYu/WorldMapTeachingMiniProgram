@@ -8,7 +8,8 @@
 		<view style="width: 100%;">
 			<worldMapChartVue :chooseLocation="userChooseLoacation"></worldMapChartVue>
 		</view>
-		{{userChooseLoacation}}
+		<text>您当前选择的是</text>
+		<text style="font-size: x-large;color: red;">{{userChooseLoacation}}</text>
 		<country-items></country-items>
 	</view>
 </template>
@@ -34,15 +35,19 @@
 		data() {
 			return {
 				//用户要搜索的项
-				searchItem:'',
+				searchItem:'中国',
 				//候选城市
 				candidates: getWorldCountryNameList(),
 				//用户选择的地点
-				userChooseLoacation:''
+				userChooseLoacation:'中国'
 			}
 		},
 		onLoad() {
-
+			uni.$on('chooseLocation',(data)=>{
+					console.log(data);
+				this.userChooseLoacation = data.country; 
+				this.searchItem = data.country;
+			}) 
 		},
 		//监听
 		methods: {
