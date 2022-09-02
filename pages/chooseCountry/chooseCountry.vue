@@ -23,7 +23,6 @@ import {getWorldCountryNameList} from '@/index/children/worldMapChart/data/world
 		},
 		methods: {
 			chooseCountry(location){
-				console.log("上机"+location);
 				uni.$emit("chooseLocation",{
 					country:location
 				});

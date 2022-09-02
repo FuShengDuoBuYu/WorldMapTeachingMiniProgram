@@ -8,20 +8,43 @@
 		<view style="width: 100%;">
 			<worldMapChartVue :chooseLocation="userChooseLoacation"></worldMapChartVue>
 		</view>
+		
 		<text>您当前选择的是</text>
 		<text style="font-size: x-large;color: red;">{{userChooseLoacation}}</text>
-		<country-items></country-items>
+		<country-items @showDialog='showTheDialog'></country-items>
+		
+		
+		<!-- 遮罩透明层 -->
+		<!--mask-->  
+		<view class="drawer_screen" @click="showTheDialog" v-if="showDialog">
+			
+		</view>  
+		<!--content-->
+		<!--使用animation属性指定需要执行的动画-->  
+		<view class="drawer_box" v-if="showDialog">  
+		  
+		  <!--drawer content-->  
+		  <view class="drawer_title">{{title}}</view>  
+		  <view class="drawer_content">  
+			<!-- 填充内容 -->
+			<item-dialog></item-dialog>
+		  </view>  
+		</view>
 	</view>
+	
+	
 </template>
 
 <script>
 	import worldMapChartVue from './children/worldMapChart/worldMapChart.vue';
 	import countryItems from './children/countryItems/countryItems.vue'
+	import itemDialog from './children/itemDialog/itemDialog.vue'
 	import { getWorldCountryNameList } from './children/worldMapChart/data/worldCountryName.js';
 	export default {
 		components:{
             worldMapChartVue,
-			countryItems
+			countryItems,
+			itemDialog
         },
 		//监听searchItem的变化
 		watch: {
@@ -35,18 +58,25 @@
 		data() {
 			return {
 				//用户要搜索的项
-				searchItem:'中国',
+				searchItem:'',
 				//候选城市
 				candidates: getWorldCountryNameList(),
 				//用户选择的地点
-				userChooseLoacation:'中国'
+				userChooseLoacation:'暂未选择',
+				//用户点击的item
+				title:'',
+				showDialog:false,
+				animationData:{}
 			}
 		},
 		onLoad() {
 			uni.$on('chooseLocation',(data)=>{
-					console.log(data);
 				this.userChooseLoacation = data.country; 
 				this.searchItem = data.country;
+			});
+			uni.$on('showDialog',(data)=>{
+				console.log(data.item)
+				this.title = data.item; 
 			}) 
 		},
 		//监听
@@ -56,7 +86,12 @@
 				uni.navigateTo({
 					url:url
 				})
-			}
+			},
+			//弹窗遮罩
+			showTheDialog(item) {
+				this.title = item
+				this.showDialog = !this.showDialog
+			},  			
 		}
 	}
 </script>
@@ -69,12 +104,43 @@
 		justify-content: center;
 	}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
+	/*mask*/  
+	.drawer_screen {  
+	width: 100%;  
+	height: 100%;  
+	position: fixed;  
+	top: 0;  
+	left: 0;  
+	z-index: 1000;  
+	background: #000;  
+	opacity: 0.5;  
+	overflow: hidden;  
+	}  
+	
+	/*content*/  
+	.drawer_box {  
+		width: 90vw;  
+		overflow: hidden;  
+		position: absolute; 
+		
+		height: 70vh;
+		left: 0;  
+		z-index: 1001;  
+		background: #FAFAFA;  
+		margin-left: 5vw;
+		margin-top: 30vh;
+		border-radius: 20px;  
+	}  
+	
+	.drawer_title{  
+		padding:15px;  
+		font: 20px "microsoft yahei";  
+		text-align: center;  
+		height: 5vh;
+	}  
+	
+	.drawer_content {  
+		height: 65vh;  
+		overflow-y: scroll; /*超出父盒子高度可滚动*/  
+	}  
 </style>

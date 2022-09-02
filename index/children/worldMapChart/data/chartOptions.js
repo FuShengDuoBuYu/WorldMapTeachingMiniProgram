@@ -2,10 +2,6 @@
 import {worldCountryNameMap} from './worldCountryName.js';
 
 export const chartOptions = {
-    tooltip: {
-        trigger: 'item',
-        formatter: '{b}'
-    },
     geo: {
         map: 'world',
         roam: true,
@@ -21,8 +17,8 @@ export const chartOptions = {
             min: 0.1,
             max: 2
         },
-
-        nameMap:worldCountryNameMap,
+        
+        // nameMap:worldCountryNameMap,
         itemStyle: {
             normal: {
                 borderColor: 'rgba(0, 0, 0, 0.2)' //省份边框颜色
@@ -41,13 +37,7 @@ export const chartOptions = {
             
         },
         z: 0,
-        regions: [{
-            name: '中国',
-            itemStyle: {
-                areaColor: 'red',
-                color: 'red'
-            }
-        }]
+        regions: []
     },
     //配置属性
     series: [

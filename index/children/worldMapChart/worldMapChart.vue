@@ -10,7 +10,7 @@
 	import * as echarts from 'echarts/echarts.min.js'; /*echarts.min.js为在线定制*/
 	import * as worldJson from '../../../echarts/map/json/world.json'; /*echart.min.js为在线定制*/
 	import mpvueEcharts from 'mpvue-echarts';
-	
+	import {getCountryNameByEnglish} from './data/worldCountryName.js'
 	//引入图表的option
 	import {chartOptions} from './data/chartOptions.js';
 	export default {
@@ -21,20 +21,23 @@
 		//接收父组件的值
 		props:{
 			chooseLocation:String,
-			default:"中国",
+			default:"中国(China)",
 		},
 		//监听chooseLocation的变化
 		watch: {
 			chooseLocation(newVal, oldVal) {
 				//修改options中的geo的region内容
 				let regions = [{
-					name: newVal,
+					name: newVal.match(/\(([^)]*)\)/)[1],
 					itemStyle: {
 						areaColor: 'red',
 						color: 'red'
 					}
 				}];
+				// console.log(newVal.substr(newVal.indexOf('(')+1,newVal.length-1))
+				
 				this.options.geo.regions = regions;
+				console.log(this.options)
 				this.chart.setOption(this.options);
 				this.$refs.mapChart.setChart(this.chart);
 			}
@@ -79,6 +82,13 @@
 				//初始化echarts实例
 				this.chart.setOption(this.options);
 				this.$refs.mapChart.setChart(this.chart);
+				//表格绑定点击事件
+				this.chart.on('click',function(e){
+					console.log(getCountryNameByEnglish(e.name));
+					uni.$emit("chooseLocation", {
+						country:getCountryNameByEnglish(e.name)
+					});
+				})
 			}
 		}
 	}

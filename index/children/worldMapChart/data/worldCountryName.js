@@ -194,11 +194,20 @@ const worldCountry = {
 
 export const worldCountryNameMap = worldCountry ;
 
-//返回世界的中文名字数组
+//返回世界的名字数组
 export function getWorldCountryNameList() {
     let list = [];
     for (let key in worldCountry) {
-        list.push(worldCountry[key]);
+        list.push(worldCountry[key]+'('+key+')');
     }
     return list;
+}
+
+//根据英文查找国家中文名称
+export function getCountryNameByEnglish(EnName){
+    for (let key in worldCountry){
+        if(key==EnName){
+            return worldCountry[key]+'('+key+')'
+        }
+    }
 }

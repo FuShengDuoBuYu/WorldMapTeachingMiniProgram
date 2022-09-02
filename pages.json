@@ -26,5 +26,11 @@
 				}
 			]
 		}
-	]
+	],
+	"preloadRule":{
+		"index/index":{
+			"network": "all",
+			"packages": ["pages"]
+		}
+	}
 }

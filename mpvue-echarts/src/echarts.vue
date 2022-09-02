@@ -67,7 +67,6 @@ export default {
 			});
 		},
 		touchStart(e) {
-			console.log(this.chart)
 			const { disableTouch, chart } = this;
 			if (disableTouch || !chart || !e.mp.touches.length) return;
 			const touch = e.mp.touches[0];
@@ -81,7 +80,6 @@ export default {
 			});
 		},
 		touchMove(e) {
-			console.log(e)
 			const { disableTouch, throttleTouch, chart, lastMoveTime } = this;
 			if (disableTouch || !chart || !e.mp.touches.length) return;
 			if (throttleTouch) {
@@ -96,7 +94,6 @@ export default {
 			});
 		},
 		touchEnd(e) {
-			console.log(e)
 			const { disableTouch, chart } = this;
 			if (disableTouch || !chart) return;
 			const touch = e.mp.changedTouches ? e.mp.changedTouches[0] : {};
