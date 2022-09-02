@@ -1,15 +1,9 @@
 {
 	"pages": [
 		{
-			"path": "pages/index/index",
+			"path": "index/index",
 			"style": {
 				"navigationBarTitleText": "世界地图册"
-			}
-		},
-		{
-			"path": "pages/chooseCountry/chooseCountry",
-			"style": {
-				"navigationBarTitleText": "选择国家"
 			}
 		}
 	],
@@ -19,5 +13,18 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
+	"uniIdRouter": {},
+	"subPackages": [
+		{
+			"root": "pages",
+			"pages": [
+				{
+					"path": "chooseCountry/chooseCountry",
+					"style": {
+						"navigationBarTitleText": "选择国家"
+					}
+				}
+			]
+		}
+	]
 }

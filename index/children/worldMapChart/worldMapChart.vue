@@ -8,7 +8,7 @@
 
 <script>
 	import * as echarts from 'echarts/echarts.min.js'; /*echarts.min.js为在线定制*/
-	import * as worldJson from '../../../../echarts/map/json/world.json'; /*echart.min.js为在线定制*/
+	import * as worldJson from '../../../echarts/map/json/world.json'; /*echart.min.js为在线定制*/
 	import mpvueEcharts from 'mpvue-echarts';
 	
 	//引入图表的option

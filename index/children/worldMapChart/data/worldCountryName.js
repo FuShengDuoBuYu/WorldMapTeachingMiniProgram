@@ -192,7 +192,7 @@ const worldCountry = {
 }
 
 
-export const worldCountryNameMap = worldCountry;
+export const worldCountryNameMap = worldCountry ;
 
 //返回世界的中文名字数组
 export function getWorldCountryNameList() {
