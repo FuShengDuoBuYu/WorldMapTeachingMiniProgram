@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<image src="../../static/map.webp"></image>
+		<!-- <image src="../static/map.webp"></image> -->
 		
 	</view>
 </template>

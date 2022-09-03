@@ -33,7 +33,8 @@ export const chartOptions = {
                 focus: 'self'
             },
             //虚线偏移量
-            borderDashOffset: 1,
+            borderWidth:100,
+			borderDashOffset:100
             
         },
         z: 0,
@@ -45,6 +46,7 @@ export const chartOptions = {
             type: 'map',
             geoIndex: 0,
             animation: false,
+			zoom:1.8
         }
     ]
 };
