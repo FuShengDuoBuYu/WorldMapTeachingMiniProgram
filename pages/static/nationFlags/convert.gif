@@ -1,5 +1,8 @@
-//世界国家
-const worldCountry = {
+import os
+import os.path
+import sys
+
+names = {
         "Afghanistan": "阿富汗",
         "Albania": "阿尔巴尼亚",
         "Algeria": "阿尔及利亚",
@@ -191,23 +194,10 @@ const worldCountry = {
         "Zimbabwe": "津巴布韦"
 }
 
-
-export const worldCountryNameMap = worldCountry ;
-
-//返回世界的名字数组
-export function getWorldCountryNameList() {
-    let list = [];
-    for (let key in worldCountry) {
-        list.push(worldCountry[key]+'('+key+')');
-    }
-    return list;
-}
-
-//根据英文查找国家中文名称
-export function getCountryNameByEnglish(EnName){
-    for (let key in worldCountry){
-        if(key==EnName){
-            return worldCountry[key]+'('+key+')'
-        }
-    }
-}
+# 获取当前目录下的所有文件
+for root, dirs, files in os.walk('C:\\Users\\fengchuiyusan\\Desktop\\世界地图册\\codes\\WorldMap\\pages\\static\\nationFlags'):
+    for file in files:
+        # 截取文件名
+        name = file.split('.')[0]
+        # 将文件名中的空格替换为%20并重命名文件
+        os.rename(os.path.join(root, file), os.path.join(root, name.replace(' ', '%20') + '.gif'))

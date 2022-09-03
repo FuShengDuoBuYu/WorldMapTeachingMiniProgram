@@ -28,11 +28,13 @@ import {getWorldCountryNameList} from '@/index/children/worldMapChart/data/world
 				uni.navigateBack({
 					delta:1
 				})
+				
 			},
 			//获取(字符前的字符串
 			getLocationName(location){
-				let locationName = "../static/nationFlags/"+location.substr(0,location.indexOf('('))+".gif"
-				return  "../static/nationFlags/"+location.substr(0,location.indexOf('('))+".gif"
+				// locationName = "/pages/static/nationFlags/"+location.match(/\(([^)]*)\)/)[1]+".gif"
+				// return  locationName.repa
+				return "/pages/static/nationFlags/"+location.match(/\(([^)]*)\)/)[1]+".gif"
 			}
 		}
 	}
