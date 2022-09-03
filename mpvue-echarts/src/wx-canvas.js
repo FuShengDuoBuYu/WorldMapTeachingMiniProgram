@@ -7,7 +7,9 @@ export default class WxCanvas {
     WxCanvas.initStyle(ctx);
     this.initEvent();
   }
-
+  
+  addEventListener() {}
+  preventDefault(){}
   getContext(contextType) {
     return contextType === '2d' ? this.ctx : null;
   }

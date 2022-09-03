@@ -6,18 +6,13 @@ export const chartOptions = {
         map: 'world',
         roam: true,
         zoom: 1.3,//视角缩放比例
-        label: {
-            normal: {
-                show: false,
-                fontSize: 8,
-                color: 'rgba(0, 0, 0, 0.5)' //文字颜色
-            }
-        },
         scaleLimit: {
             min: 0.1,
             max: 2
         },
-        
+		emphasis:{
+			focus:'self'
+		},
         // nameMap:worldCountryNameMap,
         itemStyle: {
             normal: {
@@ -41,12 +36,21 @@ export const chartOptions = {
         regions: []
     },
     //配置属性
-    series: [
-        {
-            type: 'map',
-            geoIndex: 0,
-            animation: false,
-			zoom:1.8
-        }
-    ]
+	series:[
+		{
+			name: 'city',
+			type: 'scatter',
+			coordinateSystem: 'geo',
+			symbol:'pin',
+			symbolSize:10,
+			data:[
+				// {name: 'Beijing', value: [116.3671875, 39.90973623453719, 0]},
+				// {name: 'Washington', value: [-77.013222,38.913611,  0]},
+				// {name: 'Canberra', value: [149.08, -35.15, 0]},
+				// {name: 'Brasilia', value: [-47.55,-15.47, 0]},
+				// {name: 'Frankfurt', value: [13.25,52.30, 0]},
+				// {name: 'London', value: [-0.05,51.36, 0]}
+			]
+		}
+	]
 };

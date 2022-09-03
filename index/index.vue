@@ -16,7 +16,7 @@
 		</view>
 		<view style="display: flex;justify-content:space-around;">
 			<text>您当前选择的是</text>
-			<text style="font-size: x-large;color: red;">{{userChooseLoacation}}</text>
+			<text style="font-size: x-large;color: red;">{{countryName}}</text>
 		</view>
 		<view class="content">
 			<country-items @showDialog='showTheDialog'></country-items>
@@ -25,11 +25,8 @@
 		
 		<!-- 遮罩透明层 -->
 		<!--mask-->  
-		<view class="drawer_screen" @click="showTheDialog" v-if="showDialog">
-			
-		</view>  
+		<view class="drawer_screen" @click="showTheDialog" v-if="showDialog"></view>  
 		<!--content-->
-		<!--使用animation属性指定需要执行的动画-->  
 		<view class="drawer_box" v-if="showDialog">  
 		  <!--drawer content-->  
 		  <view class="drawer_title">{{title}}</view>  
@@ -45,7 +42,7 @@
 	import worldMapChartVue from './children/worldMapChart/worldMapChart.vue';
 	import countryItems from './children/countryItems/countryItems.vue'
 	import itemDialog from './children/itemDialog/itemDialog.vue'
-	import { getWorldCountryNameList } from './children/worldMapChart/data/worldCountryName.js';
+	import { getWorldCountryNameList,getCountryNameByEnglish,ifNameIsCountry,findCityByName } from './children/worldMapChart/data/worldCountryName.js';
 	export default {
 		components:{
             worldMapChartVue,
@@ -59,6 +56,16 @@
 				if(items.includes(newVal)) {
 					this.userChooseLoacation = newVal;
 				}
+			},
+			userChooseLoacation(newVal,oldVal){
+				console.log(111)
+				if(ifNameIsCountry(newVal.match(/\(([^)]*)\)/)[1])==true){
+					this.countryName = newVal
+				}
+				//根据英文名找到国家名字
+				else{
+					this.countryName = getCountryNameByEnglish(findCityByName(newVal.match(/\(([^)]*)\)/)[1])[1])
+				}
 			}
 		},
 		data() {
@@ -68,11 +75,13 @@
 				//候选城市
 				candidates: getWorldCountryNameList(),
 				//用户选择的地点
-				userChooseLoacation:'暂未选择',
+				userChooseLoacation:'',
 				//用户点击的item
 				title:'',
 				showDialog:false,
-				animationData:{}
+				animationData:{},
+				//用户的选择的国家地的名字
+				countryName:"暂未选择"
 			}
 		},
 		onLoad() {
@@ -112,29 +121,28 @@
 
 	/*mask*/  
 	.drawer_screen {  
-	width: 100%;  
-	height: 100%;  
-	position: fixed;  
-	top: 0;  
-	left: 0;  
-	z-index: 1000;  
-	background: #000;  
-	opacity: 0.5;  
-	overflow: hidden;  
+		width: 100%;  
+		height: 100%;  
+		position: fixed;  
+		top: 0;  
+		left: 0;  
+		z-index: 1000;  
+		background: #000;  
+		opacity: 0.5;  
+		overflow: hidden;  
 	}  
 	
 	/*content*/  
 	.drawer_box {  
-		width: 90vw;  
+		width: 90%;  
 		overflow: hidden;  
-		position: absolute; 
-		
-		height: 70vh;
+		position: absolute;
+		height: 70%;
+		bottom: 0;
 		left: 0;  
 		z-index: 1001;  
 		background: #FAFAFA;  
 		margin-left: 5vw;
-		margin-top: 30vh;
 		border-radius: 20px;  
 	}  
 	

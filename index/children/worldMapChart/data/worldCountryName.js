@@ -191,14 +191,61 @@ const worldCountry = {
         "Zimbabwe": "津巴布韦"
 }
 
+const ChinaCity = {
+	"Beijing":["北京",116.3671875, 39.90973623453719, 0]
+}
 
-export const worldCountryNameMap = worldCountry ;
+//英国城市
+const EnglandCity = {
+    "London":["伦敦",-0.05,51.36, 0]
+}
+
+//德国城市
+const GermanCity = {
+    "Berlin":["柏林",53,13.25, 0]
+}
+
+//澳大利亚城市
+const AustraliaCity = {
+    "Canberra":["堪培拉",149.08, -35.15, 0]    
+}
+
+//美国城市
+const AmericaCity = {
+    "Washington": ["华盛顿", -77.02, 38.53, 0],
+}
+
+//巴西城市
+const BrazilCity = {
+    "Brasilia": ["巴西利亚",-47.55,-15.47, 0]
+}
+
+export const worldCountryNameMap = worldCountry;
 
 //返回世界的名字数组
 export function getWorldCountryNameList() {
     let list = [];
     for (let key in worldCountry) {
         list.push(worldCountry[key]+'('+key+')');
+    }
+    //将六个重点国家的城市名字也放进去
+    for (let key in ChinaCity) {
+        list.push(ChinaCity[key][0] + '(' + key + ')');
+    }
+    for (let key in EnglandCity) {
+        list.push(EnglandCity[key][0]  + '(' + key + ')');
+    }
+    for (let key in GermanCity) {
+        list.push(GermanCity[key][0]  + '(' + key + ')');
+    }
+    for (let key in AustraliaCity) {
+        list.push(AustraliaCity[key][0]  + '(' + key + ')');
+    }
+    for (let key in AmericaCity) {
+        list.push(AmericaCity[key][0]  + '(' + key + ')');
+    }
+    for (let key in BrazilCity) {
+        list.push(BrazilCity[key][0]  + '(' + key + ')');
     }
     return list;
 }
@@ -208,6 +255,45 @@ export function getCountryNameByEnglish(EnName){
     for (let key in worldCountry){
         if(key==EnName){
             return worldCountry[key]+'('+key+')'
+        }
+    }
+}
+
+//查看是否是国家
+export function ifNameIsCountry(name){
+    return !(Object.keys(worldCountry).indexOf(name)==-1);
+}
+
+//根据城市名字找到城市的经纬度
+export function findCityByName(name){
+    for (let key in ChinaCity) {
+        if (key == name) {
+            return [ChinaCity[key],"China"]
+        }
+    }
+    for (let key in EnglandCity) {
+        if (key == name) {
+            return [EnglandCity[key], "United Kingdom"]
+        }
+    }
+    for (let key in GermanCity) {
+        if (key == name) {
+            return [GermanCity[key],"Germany"]
+        }
+    }
+    for (let key in AustraliaCity) {
+        if (key == name) {
+            return [AustraliaCity[key],"Australia"]
+        }
+    }
+    for (let key in AmericaCity) {
+        if (key == name) {
+            return [AmericaCity[key],"United States"]
+        }
+    }
+    for (let key in BrazilCity) {
+        if (key == name) {
+            return [BrazilCity[key],"Brazil"]
         }
     }
 }

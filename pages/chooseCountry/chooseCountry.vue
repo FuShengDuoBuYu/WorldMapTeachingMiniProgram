@@ -28,7 +28,6 @@ import {getWorldCountryNameList} from '@/index/children/worldMapChart/data/world
 				uni.navigateBack({
 					delta:1
 				})
-				
 			},
 			//获取(字符前的字符串
 			getLocationName(location){

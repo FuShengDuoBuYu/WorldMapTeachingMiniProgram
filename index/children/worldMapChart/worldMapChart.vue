@@ -10,7 +10,7 @@
 	import * as echarts from 'echarts/echarts.min.js'; /*echarts.min.js为在线定制*/
 	import * as worldJson from '../../../echarts/map/json/world.json'; /*echart.min.js为在线定制*/
 	import mpvueEcharts from 'mpvue-echarts';
-	import {getCountryNameByEnglish} from './data/worldCountryName.js'
+	import {getCountryNameByEnglish,ifNameIsCountry,findCityByName} from './data/worldCountryName.js'
 	//引入图表的option
 	import {chartOptions} from './data/chartOptions.js';
 	export default {
@@ -26,18 +26,41 @@
 		//监听chooseLocation的变化
 		watch: {
 			chooseLocation(newVal, oldVal) {
-				//修改options中的geo的region内容
-				let regions = [{
-					name: newVal.match(/\(([^)]*)\)/)[1],
-					itemStyle: {
-						areaColor: 'red',
-						color: 'red'
-					}
-				}];
-				// console.log(newVal.substr(newVal.indexOf('(')+1,newVal.length-1))
+				if(ifNameIsCountry(newVal.match(/\(([^)]*)\)/)[1])==true){
+					//修改options中的geo的region内容
+					let regions = [{
+						name: newVal.match(/\(([^)]*)\)/)[1],
+						itemStyle: {
+							areaColor: 'red',
+							color: 'red'
+						}
+					}];
+					this.options.series[0].data = [];
+					this.options.geo.regions = regions;
+				}
+				else {
+					let cityInfo = findCityByName(newVal.match(/\(([^)]*)\)/)[1]);
+					//设置region
+					let regions = [{
+						name: cityInfo[1],
+						itemStyle: {
+							areaColor: 'red',
+							color: 'red'
+						}
+					}];
+					//设置city亮灯
+					let seriesData = [
+						{
+							name:cityInfo[0][0],
+							value:[cityInfo[0][1],cityInfo[0][2],cityInfo[0][3]]
+						}
+					]
+
+					this.options.geo.regions = regions;
+					this.options.series[0].data = seriesData;
+				}
 				
-				this.options.geo.regions = regions;
-				console.log(this.options)
+				//配置图表
 				this.chart.setOption(this.options);
 				this.$refs.mapChart.setChart(this.chart);
 			}
