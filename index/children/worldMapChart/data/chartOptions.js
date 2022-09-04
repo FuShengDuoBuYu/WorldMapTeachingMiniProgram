@@ -13,26 +13,21 @@ export const chartOptions = {
 		emphasis:{
 			focus:'self'
 		},
-        // nameMap:worldCountryNameMap,
         itemStyle: {
             normal: {
                 borderColor: 'rgba(0, 0, 0, 0.2)' //省份边框颜色
             },
-            emphasis: {
-                areaColor: 'red', //鼠标选择区域颜色
-                shadowOffsetX: 0,
-                shadowOffsetY: 0,
-                shadowBlur: 20,
-                borderWidth: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.2)', //选择后的边框阴影颜色,
-                focus: 'self'
-            },
-            //虚线偏移量
-            borderWidth:100,
-			borderDashOffset:100
-            
+    //         emphasis: {
+    //             areaColor: 'red', //鼠标选择区域颜色
+    //             shadowOffsetX: 0,
+    //             shadowOffsetY: 0,
+    //             shadowBlur: 20,
+    //             borderWidth: 20,
+				// borderColor: 'blue',
+    //             shadowColor: 'blue', //选择后的边框阴影颜色,
+    //             focus: 'self'
+    //         },
         },
-        z: 0,
         regions: []
     },
     //配置属性

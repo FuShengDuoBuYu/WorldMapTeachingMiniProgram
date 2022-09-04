@@ -26,43 +26,9 @@
 		//监听chooseLocation的变化
 		watch: {
 			chooseLocation(newVal, oldVal) {
-				if(ifNameIsCountry(newVal.match(/\(([^)]*)\)/)[1])==true){
-					//修改options中的geo的region内容
-					let regions = [{
-						name: newVal.match(/\(([^)]*)\)/)[1],
-						itemStyle: {
-							areaColor: 'red',
-							color: 'red'
-						}
-					}];
-					this.options.series[0].data = [];
-					this.options.geo.regions = regions;
-				}
-				else {
-					let cityInfo = findCityByName(newVal.match(/\(([^)]*)\)/)[1]);
-					//设置region
-					let regions = [{
-						name: cityInfo[1],
-						itemStyle: {
-							areaColor: 'red',
-							color: 'red'
-						}
-					}];
-					//设置city亮灯
-					let seriesData = [
-						{
-							name:cityInfo[0][0],
-							value:[cityInfo[0][1],cityInfo[0][2],cityInfo[0][3]]
-						}
-					]
-
-					this.options.geo.regions = regions;
-					this.options.series[0].data = seriesData;
-				}
+				this.refreshMapOptions(newVal)
+				console.log("换位置了")
 				
-				//配置图表
-				this.chart.setOption(this.options);
-				this.$refs.mapChart.setChart(this.chart);
 			}
 		},
 		data() {
@@ -70,23 +36,72 @@
 				chart: {},
 				echarts,
 				options:chartOptions,
+				//定时器
+				timer:{}
 			};
 		},
 		onLoad() {
-			console.log("收到");
 			
 		},
 		onReady() {
-			// this.options.geo.regions = regions;
-			// this.chart.setOption(this.options);
-			// this.$refs.mapChart.setChart(this.chart);
+
 		},
 		methods: {
-			//用户点击时要清除下region数据
-			clearLocation(){
-
+			//重设地图options
+			refreshMapOptions(locationName){
+				let color = 'yellow'
+				clearInterval(this.timer)
+				if(ifNameIsCountry(locationName.match(/\(([^)]*)\)/)[1])==true){
+					//定时执行
+					this.timer = setInterval(()=>{
+						console.log(locationName)
+						//修改options中的geo的region内容
+						let regions = [{
+							name: locationName.match(/\(([^)]*)\)/)[1],
+							itemStyle: {
+								areaColor: 'red',
+								borderColor:color,
+								borderWidth:1
+							}
+						}];
+						color = (color =='yellow'?'white':'yellow');
+						this.options.series[0].data = [];
+						this.options.geo.regions = regions;
+						//配置图表
+						this.chart.setOption(this.options);
+						this.$refs.mapChart.setChart(this.chart);
+					},1000)
+					
+				}
+				else {
+					this.timer = setInterval(()=>{
+						let cityInfo = findCityByName(locationName.match(/\(([^)]*)\)/)[1]);
+						//设置region
+						let regions = [{
+							name: cityInfo[1],
+							itemStyle: {
+								areaColor: 'red',
+								borderColor:color,
+								borderWidth:1
+							}
+						}];
+						//设置city亮灯
+						let seriesData = [
+							{
+								name:cityInfo[0][0],
+								value:[cityInfo[0][1],cityInfo[0][2],cityInfo[0][3]]
+							}
+						]
+						color = (color =='yellow'?'white':'yellow')
+						this.options.geo.regions = regions;
+						this.options.series[0].data = seriesData;
+						//配置图表
+						this.chart.setOption(this.options);
+						this.$refs.mapChart.setChart(this.chart);
+					},1000)
+				}
 			},
-
+			
 			//绘制地图
 			renderMap(e) {
 				let {
