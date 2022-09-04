@@ -42,6 +42,8 @@
 		margin: 20rpx;
 		border-radius: 20rpx;
 		color: white;
+		/* 更加立体一些 */
+		box-shadow: 0 0 10rpx rgba(0,0,0,0.5);
 	}
 	.content {
 		display: flex;

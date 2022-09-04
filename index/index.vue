@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<image class="bg" src="../static/index_bg.webp"></image>
+		<!-- <image class="bg" src="../static/index_bg.webp"></image> -->
 		<view style="display: flex;justify-content: space-between;margin: 3%;">
 			<text style="font-size: xx-large;color: beige;font-weight: bold;">世界地图册</text>
 			<text style="font-size: x-large;color: beige;font-weight: lighter;">World Map</text>
@@ -8,11 +8,11 @@
 		<!-- 顶部搜索框和按钮 -->
 		<view style="display: flex;width:100%;justify-content:center;margin:auto">
 			<uni-icons style="width: 10%;margin-left: 3%;" type="search" size="30"></uni-icons>
-			<uni-combox style="width: 60%;" :candidates="candidates" placeholder="请输入要查找的内容" v-model="searchItem"></uni-combox>
+			<uni-combox @ifShowSelector="ifShowCanvas" style="width: 60%;" :candidates="candidates" placeholder="请输入要查找的内容" v-model="searchItem"></uni-combox>
 			<button size="mini" style="background-color: bisque;" hover-class="button-hover" @click="goto('/pages/chooseCountry/chooseCountry')">国家</button>
 		</view>
-		<view style="width: 100%;z-index: -10;">
-			<worldMapChartVue :chooseLocation="userChooseLoacation"></worldMapChartVue>
+		<view style="width: 100%;height: 700rpx;">
+			<worldMapChartVue v-show="ifShowCanvasChart" :chooseLocation="userChooseLoacation"></worldMapChartVue>
 		</view>
 		<view style="display: flex;justify-content:space-around;">
 			<text>您当前选择的是</text>
@@ -80,7 +80,9 @@
 				showDialog:false,
 				animationData:{},
 				//用户的选择的国家地的名字
-				countryName:"暂未选择"
+				countryName:"暂未选择",
+				//是否展示canvas
+				ifShowCanvasChart:true
 			}
 		},
 		onLoad() {
@@ -105,7 +107,11 @@
 			showTheDialog(item) {
 				this.title = item
 				this.showDialog = !this.showDialog
-			},  			
+			},  
+			//canvas显示与否
+			ifShowCanvas(ifShowSelect){
+				this.ifShowCanvasChart = !ifShowSelect
+			}
 		}
 	}
 </script>
