@@ -11,7 +11,7 @@
 			<uni-combox style="width: 60%;" :candidates="candidates" placeholder="请输入要查找的内容" v-model="searchItem"></uni-combox>
 			<button size="mini" style="background-color: bisque;" hover-class="button-hover" @click="goto('/pages/chooseCountry/chooseCountry')">国家</button>
 		</view>
-		<view style="width: 100%;">
+		<view style="width: 100%;z-index: -10;">
 			<worldMapChartVue :chooseLocation="userChooseLoacation"></worldMapChartVue>
 		</view>
 		<view style="display: flex;justify-content:space-around;">
@@ -25,16 +25,16 @@
 		
 		<!-- 遮罩透明层 -->
 		<!--mask-->  
-		<view class="drawer_screen" @click="showTheDialog" v-if="showDialog"></view>  
+		<cover-view class="drawer_screen" @click="showTheDialog" v-if="showDialog"></cover-view>  
 		<!--content-->
-		<view class="drawer_box" v-if="showDialog">  
+		<cover-view class="drawer_box" v-if="showDialog">  
 		  <!--drawer content-->  
-		  <view class="drawer_title">{{title}}</view>  
-		  <view class="drawer_content">  
+		  <cover-view class="drawer_title">{{title}}</cover-view>  
+		  <cover-view class="drawer_content">  
 			<!-- 填充内容 -->
 			<item-dialog></item-dialog>
-		  </view>  
-		</view>
+		  </cover-view>  
+		</cover-view>
 	</view>
 </template>
 
@@ -58,7 +58,6 @@
 				}
 			},
 			userChooseLoacation(newVal,oldVal){
-				console.log(111)
 				if(ifNameIsCountry(newVal.match(/\(([^)]*)\)/)[1])==true){
 					this.countryName = newVal
 				}
