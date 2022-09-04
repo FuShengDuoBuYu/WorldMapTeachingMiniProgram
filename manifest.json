@@ -55,7 +55,13 @@
             "urlCheck" : false
         },
         "usingComponents" : true,
-		"optimization":{"subPackages":true}
+		"optimization":{"subPackages":true},
+		"plugins":{
+			"WechatSI": {
+			      "version": "0.3.3",
+			      "provider": "wx069ba97219f66d99"
+			}
+		}
     },
     "mp-alipay" : {
         "usingComponents" : true
