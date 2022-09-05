@@ -27,9 +27,7 @@
 		watch: {
 			chooseLocation(newVal, oldVal) {
 				this.refreshMapOptions(newVal)
-				console.log("换位置了")
-				
-			}
+			},
 		},
 		data() {
 			return {
@@ -38,7 +36,7 @@
 				options:chartOptions,
 				//定时器
 				timer:{}
-			};
+			}
 		},
 		onLoad() {
 			

@@ -25,14 +25,33 @@
 
 <script>
 	export default {
-		name:'countryItems',
-		methods:{
-			showDialog(item){
-				console.log(item)
+	name: 'countryItems',
+	props: {
+		countryName: {
+			type: String,
+			default: ''
+		}
+	},
+	methods:{
+		showDialog(item) {
+			if (this.ifMarkCountry(this.countryName)==true) {
 				this.$emit('showDialog',item)
 			}
+			else {
+				//展示提示框
+				uni.showToast({
+					title: '更多信息完善中',
+					icon: 'none',
+					duration: 2000
+				});
+			}
+		},
+		//查看是否是重点国家
+		ifMarkCountry(item){
+			return ["中国(China)","美国(United States)","英国(United Kingdom)","澳大利亚(Australia)","巴西(Brazil)","德国(Germany)"].includes(item)
 		}
 	}
+}
 </script>
 
 <style>

@@ -8,10 +8,9 @@
 </template>
 
 <script>
-import uniCard from '../../uni_modules/uni-card/components/uni-card/uni-card.vue'
 import {getWorldCountryNameList} from '@/index/children/worldMapChart/data/worldCountryName.js'
 	export default {
-  components: { uniCard },
+  components: {},
 		data() {
 			return {
 				countries:getWorldCountryNameList()

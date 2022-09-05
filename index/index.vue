@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<!-- <image class="bg" src="../static/index_bg.webp"></image> -->
+		<image class="bg" :src="backgroundImage"></image>
 		<view style="display: flex;justify-content: space-between;margin: 3%;">
 			<text style="font-size: xx-large;color: beige;font-weight: bold;">世界地图册</text>
 			<text style="font-size: x-large;color: beige;font-weight: lighter;">World Map</text>
@@ -19,7 +19,7 @@
 			<text style="font-size: x-large;color: red;">{{countryName}}</text>
 		</view>
 		<view class="content">
-			<country-items @showDialog='showTheDialog'></country-items>
+			<country-items :countryName="countryName" @showDialog='showTheDialog'></country-items>
 		</view>
 		
 		
@@ -29,10 +29,9 @@
 		<!--content-->
 		<cover-view class="drawer_box" v-if="showDialog">  
 		  <!--drawer content-->  
-		  <cover-view class="drawer_title">{{title}}</cover-view>  
 		  <cover-view class="drawer_content">  
 			<!-- 填充内容 -->
-			<item-dialog></item-dialog>
+			<item-dialog :title="title" :countryName = "countryName"></item-dialog>
 		  </cover-view>  
 		</cover-view>
 	</view>
@@ -40,8 +39,10 @@
 
 <script>
 	import worldMapChartVue from './children/worldMapChart/worldMapChart.vue';
-	import countryItems from './children/countryItems/countryItems.vue'
-	import itemDialog from './children/itemDialog/itemDialog.vue'
+	import countryItems from './children/countryItems/countryItems.vue';
+	import itemDialog from './children/itemDialog/itemDialog.vue';
+	import {images} from './data.js'
+	//引入bgImage
 	import { getWorldCountryNameList,getCountryNameByEnglish,ifNameIsCountry,findCityByName } from './children/worldMapChart/data/worldCountryName.js';
 	export default {
 		components:{
@@ -82,7 +83,10 @@
 				//用户的选择的国家地的名字
 				countryName:"暂未选择",
 				//是否展示canvas
-				ifShowCanvasChart:true
+				ifShowCanvasChart:true,
+				backgroundImage:images.bgImage,
+				//dialog要展示的内容
+				dialogContent:''
 			}
 		},
 		onLoad() {
@@ -91,7 +95,7 @@
 				this.searchItem = data.country;
 			});
 			uni.$on('showDialog',(data)=>{
-				console.log(data.item)
+				
 				this.title = data.item; 
 			}) 
 		},
@@ -105,6 +109,7 @@
 			},
 			//弹窗遮罩
 			showTheDialog(item) {
+				// console.log(this.bgImage)
 				this.title = item
 				this.showDialog = !this.showDialog
 			},  
@@ -151,13 +156,6 @@
 		border-radius: 20px;  
 	}  
 	
-	.drawer_title{  
-		padding:15px;  
-		font: 20px "microsoft yahei";  
-		text-align: center;  
-		height: 5vh;
-	}  
-	
 	.drawer_content {  
 		height: 65vh;  
 		overflow-y: scroll; /*超出父盒子高度可滚动*/  
@@ -168,7 +166,6 @@
 		position: fixed;
 		width: 100%;
 		height: 100%;
-		
 		top: 0;
 		left: 0;
 		z-index: -1;
