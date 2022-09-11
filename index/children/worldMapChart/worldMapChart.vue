@@ -1,9 +1,12 @@
 <template>
-	<view class="container">
-		<view class="wrap">
-			<mpvue-echarts id="main" ref="mapChart" :echarts="echarts" @onInit="renderMap" @click="clearLocation" />
-		</view>
+	<view>
+		<scroll-view scroll-x scroll-y @click="click" @scroll="scrollCanvas">
+			<view class="wrap" :style="{transform:canvasLen}">
+				<mpvue-echarts ref="echarts" id="main" :echarts="echarts" @onInit="renderMap" @click="clearLocation" />
+			</view>
+		</scroll-view>
 	</view>
+	
 </template>
 
 <script>
@@ -35,7 +38,8 @@
 				echarts,
 				options:chartOptions,
 				//定时器
-				timer:{}
+				timer:{},
+				canvasLen:0
 			}
 		},
 		onLoad() {
@@ -45,6 +49,17 @@
 
 		},
 		methods: {
+			click(e){
+				console.log(111)
+				this.$ref.echarts.touchEnd(e);
+			},
+			scrollCanvas(e){
+				console.log(e);
+				let scrollLeft = e.detail.scrollLeft;
+				let scrollTop = e.detail.scrollTop;
+				this.canvasLen = "translate(-"+scrollLeft + "px,-"+scrollTop+"px)";
+			},
+			
 			//重设地图options
 			refreshMapOptions(locationName){
 				let color = 'yellow'
@@ -120,7 +135,6 @@
 				this.$refs.mapChart.setChart(this.chart);
 				//表格绑定点击事件
 				this.chart.on('click',function(e){
-					console.log(getCountryNameByEnglish(e.name));
 					uni.$emit("chooseLocation", {
 						country:getCountryNameByEnglish(e.name)
 					});
@@ -134,6 +148,5 @@
 	.wrap {
 		width: 100%;
 		height: 600rpx;
-		border: 1rpx solid #ddd;
 	}
 </style>

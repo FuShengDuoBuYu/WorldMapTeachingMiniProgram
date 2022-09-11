@@ -1,10 +1,18 @@
 <template>
-	<canvas v-if="canvasId" class="ec-canvas" :id="canvasId" :canvasId="canvasId" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @error="error"></canvas>
+	<canvas force-use-old-canvas="true" v-if="canvasId" class="ec-canvas" :id="canvasId" :canvasId="canvasId" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @error="error"></canvas>
 </template>
 
 <script>
 import WxCanvas from './wx-canvas';
 export default {
+	// watch:{
+	// 	tapX(newVal){
+	// 		this.touchChart();
+	// 	},
+	// 	tapY(newVal){
+	// 		this.touchChart();
+	// 	}
+	// },
 	props: {
 		canvasId: {
 			type: String,
@@ -22,6 +30,14 @@ export default {
 			type: Boolean,
 			default: false
 		}
+		// tapX:{
+		// 	type:Number,
+		// 	default:0
+		// },
+		// tapY:{
+		// 	type:Number,
+		// 	default:0
+		// }
 	},
 	// #ifdef H5
 	mounted() {
@@ -32,6 +48,13 @@ export default {
 	onReady() {
 		if (!this.lazyLoad) this.init();
 	},
+	// onLoad(){
+	// 	console.log(111)
+	// 	uni.$on("touchChart",(e)=>{
+	// 		console.log(e);
+	// 		this.touchEnd(e)
+	// 	})
+	// },
 	// #endif
 	methods: {
 		setChart(chart){
@@ -94,6 +117,7 @@ export default {
 			});
 		},
 		touchEnd(e) {
+			console.log(e)
 			const { disableTouch, chart } = this;
 			if (disableTouch || !chart) return;
 			const touch = e.mp.changedTouches ? e.mp.changedTouches[0] : {};
@@ -105,15 +129,26 @@ export default {
 				zrX: touch.x,
 				zrY: touch.y
 			});
-		}
+		},
+		// touchChart(){
+		// 	console.log(12345)
+		// 	chart._zr.handler.dispatch('mouseup', {
+		// 		zrX: this.tapX,
+		// 		zrY: this.tapY
+		// 	});
+		// 	chart._zr.handler.dispatch('click', {
+		// 		zrX: this.tapX,
+		// 		zrY: this.tapY
+		// 	});
+		// }
 	}
 };
 </script>
 
 <style scoped>
 .ec-canvas {
-	width: 100%;
-	height: 100%;
+	width: 200vw;
+	height: 80vh;
 	flex: 1;
 }
 </style>

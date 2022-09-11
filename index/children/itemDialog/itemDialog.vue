@@ -5,7 +5,7 @@
 		<cover-image class="image" :src="imageSrc"></cover-image>
 		<!-- 循环展示所有的item -->
 		<cover-view class="item" v-for="(value,key) in textContent" :key="key">
-			<button size="mini" type="primary" class="btn" @click="startToSpeech(item.text)">
+			<button v-if="key!=''" size="mini" type="primary" class="btn" @click="startToSpeech(item.text)">
 				{{key}}
 			</button>
 			<cover-view class="text">
@@ -219,11 +219,12 @@ export default {
 		box-shadow: 0 0 10rpx rgba(0,0,0,0.5);
 	}
 	.text{
-		font-size: 20rpx;
+		font-size: 25rpx;
 		/* 自动换行 */
 		white-space: normal;
-		/* 居中显示 */
-		text-align: center;
+		text-align: left;
+		/* 换行时缩进 */
+		text-indent: 2em;
 	}
 	.titleCountry{
 		font-size: 30rpx;

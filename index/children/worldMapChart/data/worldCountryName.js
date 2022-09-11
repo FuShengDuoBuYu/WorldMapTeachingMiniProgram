@@ -192,32 +192,54 @@ const worldCountry = {
 }
 
 const ChinaCity = {
-	"Beijing":["北京",116.3671875, 39.90973623453719, 0]
+	"Beijing":["北京",116.3671875, 39.90973623453719, 0],
+	"Shanghai":["上海",121.46, 31.23, 0], 
+	"Guangzhou":["广州",113.26, 23.14, 0], 
+	"Chengdu":["成都",104.06, 30.73, 0], 
+	"Shenzhen":["深圳",114.06, 22.55, 0],
+	"Hong Kong":["香港",114.15, 22.29, 0],
+	"Tianjin":["天津", 117.19, 39.10, 0]
 }
 
 //英国城市
 const EnglandCity = {
-    "London":["伦敦",-0.05,51.36, 0]
+    "London":["伦敦",-0.05,51.36, 0],
+	"Birmingham":["伯明翰", -1.90, 52.48, 0],
+	"Manchester":["曼切斯特", -2.24, 53.48, 0],
+	"Liverpool":["利物浦",  -2.99, 53.41, 0],
+	"Leeds":["利兹", -1.54, 53.80, 0]
 }
 
 //德国城市
 const GermanCity = {
-    "Berlin":["柏林",53,13.25, 0]
+    "Berlin":["柏林",53,13.25, 0],
+	"Munich":["慕尼黑", 11.55, 48.16, 0],
+	"Hamburg":["汉堡",  9.99, 53.56, 0]
 }
 
 //澳大利亚城市
 const AustraliaCity = {
-    "Canberra":["堪培拉",149.08, -35.15, 0]    
+    "Canberra":["堪培拉",149.08, -35.15, 0],
+	"Sydney":["悉尼", 151.25, -33.87, 0],
+	"Melbourne":["墨尔本", 144.93, -37.75, 0]
+
 }
 
 //美国城市
 const AmericaCity = {
     "Washington": ["华盛顿", -77.02, 38.53, 0],
+	"New York":["纽约",  -74.00, 40.78, 0],
+	"Los Angeles":["洛杉矶",  -118.30, 34.01, 0],
+	"Chicago":["芝加哥", -87.62, 42.03, 0],
+	"Houston":["休斯顿", -95.44, 29.84, 0],
+	"San Francisco":["旧金山",  -122.43, 37.82, 0]
 }
 
 //巴西城市
 const BrazilCity = {
-    "Brasilia": ["巴西利亚",-47.55,-15.47, 0]
+    "Brasilia": ["巴西利亚",-47.55,-15.47, 0],
+	"Salvador":["萨尔瓦多", -38.49, -12.94, 0],
+	"Rio de Janeiro":["里约热内卢", -43.24, -22.83, 0]
 }
 
 export const worldCountryNameMap = worldCountry;
