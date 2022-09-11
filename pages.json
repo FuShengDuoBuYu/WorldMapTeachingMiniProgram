@@ -3,7 +3,7 @@
 		{
 			"path": "index/index",
 			"style": {
-				"navigationBarTitleText": "世界地图册"
+				"navigationBarTitleText": "世界地图"
 			}
 		}
 	],
@@ -22,6 +22,12 @@
 					"path": "chooseCountry/chooseCountry",
 					"style": {
 						"navigationBarTitleText": "选择国家"
+					}
+				},
+				{
+					"path": "worldRecords/worldRecords",
+					"style": {
+						"navigationBarTitleText": "世界之最"
 					}
 				}
 			]

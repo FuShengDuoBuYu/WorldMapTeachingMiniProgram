@@ -25,8 +25,8 @@
 
 <script>
 	//===================================
-	var plugin = requirePlugin("WechatSI")
-	let manager = plugin.getRecordRecognitionManager()
+	// var plugin = requirePlugin("WechatSI")
+	// let manager = plugin.getRecordRecognitionManager()
 	// ====================================
 import { ChinaInfo } from './data/China.js'
 import { AustraliaInfo } from './data/Australia.js'

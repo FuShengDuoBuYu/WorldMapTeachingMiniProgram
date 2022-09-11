@@ -1,15 +1,15 @@
 <template>
 	<view>
 		<image class="bg" :src="backgroundImage"></image>
-		<view style="display: flex;justify-content: space-between;margin: 3%;">
+		<view style="display: flex;justify-content: space-around;margin: 3%;">
 			<text style="font-size: xx-large;color: beige;font-weight: bold;">世界地图册</text>
-			<text style="font-size: x-large;color: beige;font-weight: lighter;">World Map</text>
+			<button size="mini" type="default" @click="goto('/pages/worldRecords/worldRecords')">切换地图</button>
 		</view>
 		<!-- 顶部搜索框和按钮 -->
 		<view style="display: flex;width:100%;justify-content:center;margin:auto">
 			<uni-icons style="width: 10%;margin-left: 3%;" type="search" size="30"></uni-icons>
 			<uni-combox @ifShowSelector="ifShowCanvas" style="width: 60%;" :candidates="candidates" placeholder="请输入要查找的内容" v-model="searchItem"></uni-combox>
-			<button size="mini" style="background-color: bisque;" hover-class="button-hover" @click="goto('/pages/chooseCountry/chooseCountry')">国家</button>
+			<button size="mini" style="background-color: bisque;" hover-class="button-hover" @click="switchTo('/pages/chooseCountry/chooseCountry')">国家</button>
 		</view>
 		<view style="width: 100%;height: 700rpx;">
 			<worldMapChartVue v-show="ifShowCanvasChart" :chooseLocation="userChooseLoacation"></worldMapChartVue>
@@ -79,7 +79,6 @@
 				//用户点击的item
 				title:'',
 				showDialog:false,
-				animationData:{},
 				//用户的选择的国家地的名字
 				countryName:"暂未选择",
 				//是否展示canvas
@@ -95,7 +94,6 @@
 				this.searchItem = data.country;
 			});
 			uni.$on('showDialog',(data)=>{
-				console.log(data)
 				this.showDialog = true;
 				this.title = data.item; 
 			}) 
@@ -105,6 +103,12 @@
 			//跳转页面
 			goto(url) {
 				uni.navigateTo({
+					url:url
+				})
+			},
+			//进入页面
+			switchTo(url){
+				uni.redirectTo({
 					url:url
 				})
 			},
