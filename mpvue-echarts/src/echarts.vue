@@ -5,14 +5,6 @@
 <script>
 import WxCanvas from './wx-canvas';
 export default {
-	// watch:{
-	// 	tapX(newVal){
-	// 		this.touchChart();
-	// 	},
-	// 	tapY(newVal){
-	// 		this.touchChart();
-	// 	}
-	// },
 	props: {
 		canvasId: {
 			type: String,
@@ -30,14 +22,6 @@ export default {
 			type: Boolean,
 			default: false
 		}
-		// tapX:{
-		// 	type:Number,
-		// 	default:0
-		// },
-		// tapY:{
-		// 	type:Number,
-		// 	default:0
-		// }
 	},
 	// #ifdef H5
 	mounted() {
@@ -48,13 +32,6 @@ export default {
 	onReady() {
 		if (!this.lazyLoad) this.init();
 	},
-	// onLoad(){
-	// 	console.log(111)
-	// 	uni.$on("touchChart",(e)=>{
-	// 		console.log(e);
-	// 		this.touchEnd(e)
-	// 	})
-	// },
 	// #endif
 	methods: {
 		setChart(chart){
@@ -83,9 +60,13 @@ export default {
 		canvasToTempFilePath(opt) {
 			const { canvasId } = this;
 			this.ctx.draw(true, () => {
+				console.log(111)
 				wx.canvasToTempFilePath({
-					canvasId,
-					...opt
+					canvasId: 'ec-canvas',
+					success(res) {
+					    console.log(res.tempFilePath)
+					},
+					
 				});
 			});
 		},
@@ -130,25 +111,14 @@ export default {
 				zrY: touch.y
 			});
 		},
-		// touchChart(){
-		// 	console.log(12345)
-		// 	chart._zr.handler.dispatch('mouseup', {
-		// 		zrX: this.tapX,
-		// 		zrY: this.tapY
-		// 	});
-		// 	chart._zr.handler.dispatch('click', {
-		// 		zrX: this.tapX,
-		// 		zrY: this.tapY
-		// 	});
-		// }
 	}
 };
 </script>
 
 <style scoped>
 .ec-canvas {
-	width: 200vw;
-	height: 80vh;
+	width: 100vw;
+	height: 40vh;
 	flex: 1;
 }
 </style>

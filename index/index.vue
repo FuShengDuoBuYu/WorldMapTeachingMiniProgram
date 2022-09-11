@@ -146,9 +146,9 @@
 	.drawer_box {  
 		width: 90%;  
 		overflow: hidden;  
-		position: absolute;
-		height: 70%;
-		bottom: 0;
+		position: fixed;
+		height: 70vh;
+		bottom: 5vh;
 		left: 0;  
 		z-index: 1001;  
 		background: #FAFAFA;  

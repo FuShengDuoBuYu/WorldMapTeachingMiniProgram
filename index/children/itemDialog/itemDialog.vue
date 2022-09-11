@@ -1,8 +1,9 @@
 <template>
 	<cover-view class="contnet">
+		<cover-image @click="preloadImage" class="image" :src="imageSrc"></cover-image>
+		
 		<cover-view class="drawer_title">{{title}}</cover-view> 
 		<cover-view class="titleCountry">{{countryName}}</cover-view>
-		<cover-image class="image" :src="imageSrc"></cover-image>
 		<!-- 循环展示所有的item -->
 		<cover-view class="item" v-for="(value,key) in textContent" :key="key">
 			<button v-if="key!=''" size="mini" type="primary" class="btn" @click="startToSpeech(item.text)">
@@ -148,6 +149,19 @@ export default {
 
 	},
 	methods: {
+		preloadImage(){
+			let that = this;
+			uni.previewImage({
+				current: that.imageSrc,
+				urls: [that.imageSrc],
+				indicator:'default',
+				loop:false,
+				success:function(res){
+					console.log(res)
+				}
+			})
+		}
+		
 		// 	startToSpeech(textToSpeech){
 		// 		console.log(this.innerAudioContext.paused)
 		// 		if(this.innerAudioContext.paused==false){
@@ -193,19 +207,17 @@ export default {
 		display: flex;
 		/* 内容都居中显示*/
 		justify-content: center;
-		overflow: scroll;
 	}
 	.image{
-		width:100%;
 		margin-top:5%;
-		margin-bottom:5%;
+		width: 100%;
 	}
 	.item{
+		overflow: scroll;
 		/* 单行展示 */
 		display: flex;
 		/* 内容两侧 */
 		justify-content: space-between;
-		margin: 5%;
 	}
 	.btn{
 		/* 自动换行 */
@@ -225,6 +237,8 @@ export default {
 		text-align: left;
 		/* 换行时缩进 */
 		text-indent: 2em;
+		margin-left: 5%;
+		margin-right: 5%;
 	}
 	.titleCountry{
 		font-size: 30rpx;

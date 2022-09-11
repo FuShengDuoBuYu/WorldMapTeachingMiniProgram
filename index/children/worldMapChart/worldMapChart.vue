@@ -1,12 +1,12 @@
 <template>
 	<view>
-		<scroll-view scroll-x scroll-y @click="click" @scroll="scrollCanvas">
-			<view class="wrap" :style="{transform:canvasLen}">
-				<mpvue-echarts ref="echarts" id="main" :echarts="echarts" @onInit="renderMap" @click="clearLocation" />
-			</view>
-		</scroll-view>
+		<view>
+			<uni-icons type="images" size=30 @click="showMapImage"></uni-icons>
+		</view>
+		<view class="wrap">
+			<mpvue-echarts ref="echarts" id="main" :echarts="echarts" @onInit="renderMap" @click="clearLocation" />
+		</view>
 	</view>
-	
 </template>
 
 <script>
@@ -39,7 +39,6 @@
 				options:chartOptions,
 				//定时器
 				timer:{},
-				canvasLen:0
 			}
 		},
 		onLoad() {
@@ -49,17 +48,6 @@
 
 		},
 		methods: {
-			click(e){
-				console.log(111)
-				this.$ref.echarts.touchEnd(e);
-			},
-			scrollCanvas(e){
-				console.log(e);
-				let scrollLeft = e.detail.scrollLeft;
-				let scrollTop = e.detail.scrollTop;
-				this.canvasLen = "translate(-"+scrollLeft + "px,-"+scrollTop+"px)";
-			},
-			
 			//重设地图options
 			refreshMapOptions(locationName){
 				let color = 'yellow'
@@ -114,7 +102,10 @@
 					},1000)
 				}
 			},
-			
+			//将canvas转为图片
+			showMapImage(){
+				this.$refs.echarts.canvasToTempFilePath();
+			},
 			//绘制地图
 			renderMap(e) {
 				let {
