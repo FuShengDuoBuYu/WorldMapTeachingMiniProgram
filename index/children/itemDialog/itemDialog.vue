@@ -1,8 +1,14 @@
 <template>
 	<cover-view class="contnet">
 		<cover-image @click="preloadImage" class="image" :src="imageSrc"></cover-image>
-		
-		<cover-view class="drawer_title">{{title}}</cover-view> 
+		<cover-view style="display: flex;justify-content: space-around;">
+			<cover-view class="drawer_title">
+				{{title}}
+			</cover-view>
+			<cover-view>
+				<button size="mini" type="primary" class="btn" @click="startToSpeech(textContent[''])">语音播报</button>
+			</cover-view>
+		</cover-view>
 		<cover-view class="titleCountry">{{countryName}}</cover-view>
 		<!-- 循环展示所有的item -->
 		<cover-view class="item" v-for="(value,key) in textContent" :key="key">
@@ -19,8 +25,8 @@
 
 <script>
 	//===================================
-	// var plugin = requirePlugin("WechatSI")
-	// let manager = plugin.getRecordRecognitionManager()
+	var plugin = requirePlugin("WechatSI")
+	let manager = plugin.getRecordRecognitionManager()
 	// ====================================
 import { ChinaInfo } from './data/China.js'
 import { AustraliaInfo } from './data/Australia.js'
@@ -150,6 +156,9 @@ export default {
 	},
 	methods: {
 		preloadImage(){
+			uni.showLoading({
+				'title':"加载中"
+			})
 			let that = this;
 			uni.previewImage({
 				current: that.imageSrc,
@@ -157,47 +166,52 @@ export default {
 				indicator:'default',
 				loop:false,
 				success:function(res){
-					console.log(res)
+					uni.hideLoading()
 				}
 			})
-		}
+		},
 		
-		// 	startToSpeech(textToSpeech){
-		// 		console.log(this.innerAudioContext.paused)
-		// 		if(this.innerAudioContext.paused==false){
-		// 			this.innerAudioContext.pause()
-		// 			uni.showToast({
-		// 				title:"停止播放",
-		// 				duration:1500
-		// 			})
-
-		// 			return
-		// 		}
-		// 		var that = this
-		// 		plugin.textToSpeech({
-		// 			lang: "zh_CN",
-		// 			    tts: true,
-		// 			    content: textToSpeech,
-		// 			    success: function(res) {
-		// 					that.innerAudioContext.autoplay = true;
-		// 					that.innerAudioContext.src = res.filename;
-		// 					that.innerAudioContext.onPlay(() => {
-		// 					  uni.showToast({
-		// 					  	title:"播放音频",
-		// 						duration:1500
-		// 					  })
-		// 					});   
-		// 			    },
-		// 			    fail: function(res) {
-		// 			        uni.showToast({
-		// 			        	title:"播放失败",
-		// 						icon:"error",
-		// 						duration:1500
-		// 			        })
-		// 			    }
-		// 		})
-		// 	}
-		//
+		startToSpeech(textToSpeech){
+			uni.showLoading({
+				title:'加载中'
+			})
+			if(this.innerAudioContext.paused==false){
+				this.innerAudioContext.pause()
+				uni.showToast({
+					title:"停止播放",
+					duration:1500
+				})
+				uni.hideLoading()
+				return
+			}
+			var that = this
+			plugin.textToSpeech({
+				lang: "zh_CN",
+					tts: true,
+					content: textToSpeech,
+					success: function(res) {
+						that.innerAudioContext.autoplay = true;
+						that.innerAudioContext.src = res.filename;
+						uni.hideLoading();
+						that.innerAudioContext.onPlay(() => {
+						  uni.showToast({
+							title:"播放音频",
+							duration:1500
+						  })
+						});   
+					},
+					fail: function(res) {
+						console.log(res)
+						uni.hideLoading()
+						uni.showToast({
+							title:"播放失败",
+							icon:"error",
+							duration:1500
+						})
+					}
+			})
+		}
+	
 	}
 }
 </script>
@@ -241,11 +255,12 @@ export default {
 		margin-right: 5%;
 	}
 	.titleCountry{
-		font-size: 30rpx;
+		padding:15px;
+		font: 20px "microsoft yahei";  
+		text-align: center;  
+		height: 5vh;
 		/* 红色 */
 		color: red;
-		/* 居中 */
-		text-align: center;
 	}
 	.drawer_title{  
 		padding:15px;  

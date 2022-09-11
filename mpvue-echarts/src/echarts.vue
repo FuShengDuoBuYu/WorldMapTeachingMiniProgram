@@ -1,5 +1,5 @@
 <template>
-	<canvas force-use-old-canvas="true" v-if="canvasId" class="ec-canvas" :id="canvasId" :canvasId="canvasId" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @error="error"></canvas>
+	<canvas v-if="canvasId" class="ec-canvas" :id="canvasId" :canvasId="canvasId" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @error="error"></canvas>
 </template>
 
 <script>
@@ -57,18 +57,24 @@ export default {
 				})
 				.exec();
 		},
-		canvasToTempFilePath(opt) {
-			const { canvasId } = this;
-			this.ctx.draw(true, () => {
-				console.log(111)
-				wx.canvasToTempFilePath({
-					canvasId: 'ec-canvas',
-					success(res) {
-					    console.log(res.tempFilePath)
-					},
+		canvasToTempFilePath() {
+			uni.canvasToTempFilePath({
+				canvasId: 'ec-canvas',
+				success(res) {
+				    uni.previewImage({
+				    	urls:[res.tempFilePath],
+						indicator:'default',
+						loop:false,
+						success: function (res) {
+							uni.hideLoading();
+						}
+				    })
 					
-				});
-			});
+				},
+				fail(res){
+					console.log(res)
+				}
+			},this);
 		},
 		touchStart(e) {
 			const { disableTouch, chart } = this;
@@ -98,7 +104,6 @@ export default {
 			});
 		},
 		touchEnd(e) {
-			console.log(e)
 			const { disableTouch, chart } = this;
 			if (disableTouch || !chart) return;
 			const touch = e.mp.changedTouches ? e.mp.changedTouches[0] : {};

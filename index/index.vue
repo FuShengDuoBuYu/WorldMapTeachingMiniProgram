@@ -95,7 +95,6 @@
 				this.searchItem = data.country;
 			});
 			uni.$on('showDialog',(data)=>{
-				
 				this.title = data.item; 
 			}) 
 		},

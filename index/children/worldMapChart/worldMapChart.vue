@@ -1,8 +1,6 @@
 <template>
 	<view>
-		<view>
-			<uni-icons type="images" size=30 @click="showMapImage"></uni-icons>
-		</view>
+		<uni-icons style="margin-left: 90vw;" type="images" size=30 @click="showMapImage"></uni-icons>
 		<view class="wrap">
 			<mpvue-echarts ref="echarts" id="main" :echarts="echarts" @onInit="renderMap" @click="clearLocation" />
 		</view>
@@ -70,7 +68,7 @@
 						this.options.geo.regions = regions;
 						//配置图表
 						this.chart.setOption(this.options);
-						this.$refs.mapChart.setChart(this.chart);
+						this.$refs.echarts.setChart(this.chart);
 					},1000)
 					
 				}
@@ -98,13 +96,19 @@
 						this.options.series[0].data = seriesData;
 						//配置图表
 						this.chart.setOption(this.options);
-						this.$refs.mapChart.setChart(this.chart);
+						this.$refs.echarts.setChart(this.chart);
 					},1000)
 				}
 			},
 			//将canvas转为图片
 			showMapImage(){
-				this.$refs.echarts.canvasToTempFilePath();
+				clearInterval(this.timer)
+				uni.showLoading({
+					title: '加载中'
+				});
+				setTimeout(()=>{
+					this.$refs.echarts.canvasToTempFilePath();
+				},1000)
 			},
 			//绘制地图
 			renderMap(e) {
@@ -126,6 +130,7 @@
 				this.$refs.mapChart.setChart(this.chart);
 				//表格绑定点击事件
 				this.chart.on('click',function(e){
+					console.log(e)
 					uni.$emit("chooseLocation", {
 						country:getCountryNameByEnglish(e.name)
 					});
