@@ -18,7 +18,7 @@
 			<text style="font-size: x-large;color: red;">{{placeName}}</text>
 		</view>
 		<scroll-view>
-			<image class="image" :src="recordImage"></image>
+			<image class="image" :src="recordImage" @click="previewImage"></image>
 			<text class="text">{{recordDescription}}</text>
 		</scroll-view>
 	</view>
@@ -45,6 +45,7 @@
 			placeName: function (newVal, oldVal) {
 				this.recordImage = getWorldRecord(newVal).image;
 				this.recordDescription = getWorldRecord(newVal).description;
+				this.refreshMap();
 			}
 		},
 		data() {
@@ -59,7 +60,8 @@
 				ifShowCanvasChart:true,
 				recordImage:'',
 				recordDescription:'',
-				options:chartOptions
+				options: chartOptions,
+				timer: {}
 			}
 		},
 		onLoad() {
@@ -67,18 +69,40 @@
 		},
 		//监听
 		methods: {
+			//重绘地图
+			refreshMap() {
+				let color = 'yellow';
+				clearInterval(this.timer);
+				this.timer = setInterval(() => {
+					//修改options中的geo的region内容
+					let regions = [{
+						name: this.placeName,
+						itemStyle: {
+							areaColor: 'red',
+							borderColor:color,
+							borderWidth:1
+						}
+					}];
+					color = color === 'yellow' ? 'white' : 'yellow';
+					this.options.series[0].data = [];
+					this.options.geo.regions = regions;
+					this.chart.setOption(this.options);
+					this.$refs.echarts.setChart(this.chart);
+				}, 1000);
+			},
+			//预览图片
+			previewImage() {
+				uni.previewImage({
+					urls: [this.recordImage],
+					current: this.recordImage
+				});	
+			},
 			//进入页面
 			switchTo(url){
 				uni.redirectTo({
 					url:url
 				})
-			},
-			//弹窗遮罩
-			showTheDialog(item) {
-				// console.log(this.bgImage)
-				this.title = item
-				this.showDialog = !this.showDialog
-			},  
+			}, 
 			//canvas显示与否
 			ifShowCanvas(ifShowSelect){
 				this.ifShowCanvasChart = !ifShowSelect
@@ -104,10 +128,8 @@
 				this.$refs.echarts.setChart(this.chart);
 				//表格绑定点击事件
 				this.chart.on('click',function(e){
-					// console.log(e.name)
-					// uni.$emit("chooseLocation", {
-					// 	country:getCountryNameByEnglish(e.name)
-					// });
+					console.log(e.name)
+					this.placeName = e.name;
 				})
 			}
 		}
