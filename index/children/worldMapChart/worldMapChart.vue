@@ -94,6 +94,7 @@
 						color = (color =='yellow'?'white':'yellow')
 						this.options.geo.regions = regions;
 						this.options.series[0].data = seriesData;
+						console.log(this.options)
 						//配置图表
 						this.chart.setOption(this.options);
 						this.$refs.echarts.setChart(this.chart);

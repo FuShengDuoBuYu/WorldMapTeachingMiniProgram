@@ -3,10 +3,10 @@
 		<image class="bg" :src="backgroundImage"></image>
 		<view style="display: flex;justify-content: space-around;margin: 3%;">
 			<text style="font-size: xx-large;color: beige;font-weight: bold;">世界地图册</text>
-			<button size="mini" type="default" @click="goto('/pages/worldRecords/worldRecords')">切换地图</button>
+			<button size="mini" type="primary" @click="goto('/pages/worldRecords/worldRecords')">切换地图</button>
 		</view>
 		<!-- 顶部搜索框和按钮 -->
-		<view style="display: flex;width:100%;justify-content:center;margin:auto">
+		<view z-index="99" style="display: flex;width:100%;justify-content:center;margin:auto">
 			<uni-icons style="width: 10%;margin-left: 3%;" type="search" size="30"></uni-icons>
 			<uni-combox @ifShowSelector="ifShowCanvas" style="width: 60%;" :candidates="candidates" placeholder="请输入要查找的内容" v-model="searchItem"></uni-combox>
 			<button size="mini" style="background-color: bisque;" hover-class="button-hover" @click="switchTo('/pages/chooseCountry/chooseCountry')">国家</button>

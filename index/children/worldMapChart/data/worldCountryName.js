@@ -251,24 +251,24 @@ export function getWorldCountryNameList() {
         list.push(worldCountry[key]+'('+key+')');
     }
     //将六个重点国家的城市名字也放进去
-    // for (let key in ChinaCity) {
-    //     list.push(ChinaCity[key][0] + '(' + key + ')');
-    // }
-    // for (let key in EnglandCity) {
-    //     list.push(EnglandCity[key][0]  + '(' + key + ')');
-    // }
-    // for (let key in GermanCity) {
-    //     list.push(GermanCity[key][0]  + '(' + key + ')');
-    // }
-    // for (let key in AustraliaCity) {
-    //     list.push(AustraliaCity[key][0]  + '(' + key + ')');
-    // }
-    // for (let key in AmericaCity) {
-    //     list.push(AmericaCity[key][0]  + '(' + key + ')');
-    // }
-    // for (let key in BrazilCity) {
-    //     list.push(BrazilCity[key][0]  + '(' + key + ')');
-    // }
+    for (let key in ChinaCity) {
+        list.push(ChinaCity[key][0] + '(' + key + ')');
+    }
+    for (let key in EnglandCity) {
+        list.push(EnglandCity[key][0]  + '(' + key + ')');
+    }
+    for (let key in GermanCity) {
+        list.push(GermanCity[key][0]  + '(' + key + ')');
+    }
+    for (let key in AustraliaCity) {
+        list.push(AustraliaCity[key][0]  + '(' + key + ')');
+    }
+    for (let key in AmericaCity) {
+        list.push(AmericaCity[key][0]  + '(' + key + ')');
+    }
+    for (let key in BrazilCity) {
+        list.push(BrazilCity[key][0]  + '(' + key + ')');
+    }
     return list;
 }
 

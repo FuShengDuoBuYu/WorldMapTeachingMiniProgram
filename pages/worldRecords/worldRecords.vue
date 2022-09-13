@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<image class="bg"></image>
+		<image class="bg" :src="bgImage"></image>
 		<view style="display: flex;justify-content: space-around;margin: 3%;">
 			<text style="font-size: xx-large;color: beige;font-weight: bold;">世界之最</text>
-			<button size="mini" type="default" @click="switchTo('/index/index')">切换地图</button>
+			<button size="mini" type="primary" @click="switchTo('/index/index')">切换地图</button>
 		</view>
 		<!-- 顶部搜索框和按钮 -->
 		<view style="display: flex;width:100%;justify-content:center;margin:auto">
@@ -11,16 +11,15 @@
 			<uni-combox @ifShowSelector="ifShowCanvas" style="width: 60%;" :candidates="candidates" placeholder="请输入要查找的内容" v-model="searchItem"></uni-combox>
 		</view>
 		<view style="width: 100%;height: 700rpx;">
-			<mpvue-echarts ref="echarts" id="main" :echarts="echarts" @onInit="renderMap" @click="clearLocation" />
+			<uni-icons v-if="ifShowCanvasChart" style="margin-left: 90vw;" type="images" size=30 @click="showMapImage"></uni-icons>
+			<mpvue-echarts v-if="ifShowCanvasChart" ref="echarts" id="main" :echarts="echarts" @onInit="renderMap" @click="clearLocation" />
 		</view>
 		<view style="display: flex;justify-content:space-around;">
 			<text>您当前选择的是</text>
 			<text style="font-size: x-large;color: red;">{{placeName}}</text>
 		</view>
-		<scroll-view>
-			<image class="image" :src="recordImage" @click="previewImage"></image>
-			<text class="text">{{recordDescription}}</text>
-		</scroll-view>
+		<image class="image" :src="recordImage" @click="previewImage"></image>
+		<text class="text">{{recordDescription}}</text>
 	</view>
 </template>
 
@@ -29,7 +28,7 @@
 	import mpvueEcharts from 'mpvue-echarts';
 	import * as worldJson from 'echarts/map/json/world.json'; /*echart.min.js为在线定制*/
 	import * as worldRecordsJson from "./data/worldRecords.json";
-	import { getWorldRecords, getWorldRecord } from "./data/data.js";
+	import { getWorldRecords, getWorldRecord,images,ifPlacePoint } from "./data/data.js";
 	import {chartOptions} from "./data/chartOption.js"
 	export default {
 		components:{
@@ -61,7 +60,8 @@
 				recordImage:'',
 				recordDescription:'',
 				options: chartOptions,
-				timer: {}
+				timer: {},
+				bgImage:images.bgImage
 			}
 		},
 		onLoad() {
@@ -69,26 +69,57 @@
 		},
 		//监听
 		methods: {
+			//地图图片
+			showMapImage(){
+				clearInterval(this.timer)
+				uni.showLoading({
+					title: '加载中'
+				});
+				setTimeout(()=>{
+					this.$refs.echarts.canvasToTempFilePath();
+				},1000)
+			},
 			//重绘地图
 			refreshMap() {
 				let color = 'yellow';
 				clearInterval(this.timer);
-				this.timer = setInterval(() => {
-					//修改options中的geo的region内容
-					let regions = [{
-						name: this.placeName,
-						itemStyle: {
-							areaColor: 'red',
-							borderColor:color,
-							borderWidth:1
+				//不是一个点
+				if(ifPlacePoint(this.placeName).length==0){
+					this.timer = setInterval(() => {
+						//修改options中的geo的region内容
+						let regions = [{
+							name: this.placeName,
+							itemStyle: {
+								areaColor: 'red',
+								borderColor:color,
+								borderWidth:1
+							}
+						}];
+						color = color === 'yellow' ? 'red' : 'yellow';
+						this.options.series[0].data = [];
+						this.options.geo.regions = regions;
+						console.log(this.options)
+						this.chart.setOption(this.options);
+						this.$refs.echarts.setChart(this.chart);
+					}, 1000);
+				}
+				else{
+					let pointInfo = ifPlacePoint(this.placeName);
+					this.timer = setInterval(() => {
+						//修改options中的geo的region内容
+						let regions = [];
+						let seriesData = {
+							name:pointInfo[0],
+							value:[pointInfo[0],pointInfo[1],pointInfo[2]]
 						}
-					}];
-					color = color === 'yellow' ? 'white' : 'yellow';
-					this.options.series[0].data = [];
-					this.options.geo.regions = regions;
-					this.chart.setOption(this.options);
-					this.$refs.echarts.setChart(this.chart);
-				}, 1000);
+						this.options.series[0].data = (this.options.series[0].data.length == 0?seriesData:[])
+						// this.options.series[0].data.length == 0?ifPlacePoint(this.placeName):[];
+						this.options.geo.regions = regions;
+						console.log(this.options)
+						this.chart.setOption(this.options);
+						this.$refs.echarts.setChart(this.chart);
+					}, 2500);
+				}
 			},
 			//预览图片
 			previewImage() {
@@ -145,7 +176,6 @@
 	}
 	
 	.bg{
-		background-color: black;
 		position: fixed;
 		width: 100%;
 		height: 100%;
@@ -158,7 +188,6 @@
 	.image{
 		width: 90%;
 		margin : 5%;
-		/* 圆角 */
 		border-radius: 10px;
 	}
 	.text{
