@@ -90,6 +90,12 @@
 		},
 		onLoad() {
 			uni.$on('chooseLocation',(data)=>{
+				uni.showLoading({
+					title:'请稍后',
+				})
+				setTimeout(function () {
+					uni.hideLoading();
+				}, 1500);
 				this.userChooseLoacation = data.country; 
 				this.searchItem = data.country;
 			});
@@ -174,6 +180,6 @@
 		top: 0;
 		left: 0;
 		z-index: -1;
-		opacity: 0.8;
+		opacity: 0.5;
 	}
 </style>

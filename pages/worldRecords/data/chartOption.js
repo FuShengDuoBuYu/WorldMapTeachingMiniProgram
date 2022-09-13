@@ -1,4 +1,14 @@
 export const chartOptions = {
+	title:{
+		show:true,
+		text:'暂未选择',
+		textStyle:{
+			color:'red',
+			fontStyle:'normal',
+			fontWeight:'bolder'
+		},
+		left:'center'
+	},
     geo: {
         map: 'world',
         roam: true,

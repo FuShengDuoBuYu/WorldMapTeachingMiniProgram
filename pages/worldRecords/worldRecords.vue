@@ -87,6 +87,7 @@
 			},
 			//重绘地图
 			refreshMap() {
+				this.options.title.text = this.placeName;
 				let color = 'yellow';
 				clearInterval(this.timer);
 				//不是一个点

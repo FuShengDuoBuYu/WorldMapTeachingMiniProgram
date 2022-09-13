@@ -48,6 +48,7 @@
 		methods: {
 			//重设地图options
 			refreshMapOptions(locationName){
+				this.options.title.text = locationName;
 				let color = 'yellow'
 				clearInterval(this.timer)
 				if(ifNameIsCountry(locationName.match(/\(([^)]*)\)/)[1])==true){

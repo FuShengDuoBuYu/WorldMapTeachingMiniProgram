@@ -2,19 +2,17 @@
 	<cover-view class="contnet">
 		<cover-image @click="preloadImage" class="image" :src="imageSrc"></cover-image>
 		<cover-view style="display: flex;justify-content: space-around;">
-			<cover-view class="drawer_title">
-				{{title}}
-			</cover-view>
+			
+			<cover-view class="titleCountry">{{countryName}}</cover-view>
 			<cover-view>
-				<button size="mini" type="primary" class="btn" @click="startToSpeech(textContent[''])">语音播报</button>
+				<button size="mini" type="primary" class="btn" @click="startToSpeech()">语音播报</button>
 			</cover-view>
 		</cover-view>
-		<cover-view class="titleCountry">{{countryName}}</cover-view>
+		<cover-view class="drawer_title">
+			{{title}}
+		</cover-view>
 		<!-- 循环展示所有的item -->
 		<cover-view class="item" v-for="(value,key) in textContent" :key="key">
-			<button v-if="key!=''" size="mini" type="primary" class="btn" @click="startToSpeech(item.text)">
-				{{key}}
-			</button>
 			<cover-view class="text">
 				{{value}}
 			</cover-view>
@@ -25,8 +23,8 @@
 
 <script>
 	//===================================
-	// var plugin = requirePlugin("WechatSI")
-	// let manager = plugin.getRecordRecognitionManager()
+	var plugin = requirePlugin("WechatSI")
+	let manager = plugin.getRecordRecognitionManager()
 	// ====================================
 import { ChinaInfo } from './data/China.js'
 import { AustraliaInfo } from './data/Australia.js'
@@ -171,24 +169,31 @@ export default {
 			})
 		},
 		
-		startToSpeech(textToSpeech){
+		startToSpeech(){
 			uni.showLoading({
 				title:'加载中'
 			})
-			if(this.innerAudioContext.paused==false){
-				this.innerAudioContext.pause()
-				uni.showToast({
-					title:"停止播放",
-					duration:1500
-				})
-				uni.hideLoading()
-				return
-			}
+			//分段播报textContent的内容
+			//获取textContent的所有key
+			let textContentKey = Object.keys(this.textContent);
+			let currentKey = textContentKey[0];
+			//播报第一段
+			this.speechText(this.textContent[currentKey]);
+			//循环播报下一段
+			// while (true) {
+				manager.onStop = (res)=>{
+					console.log(111);
+				}
+			// }
+
+		},
+
+		speechText(text) {
 			var that = this
 			plugin.textToSpeech({
 				lang: "zh_CN",
 					tts: true,
-					content: textToSpeech,
+					content: text,
 					success: function(res) {
 						that.innerAudioContext.autoplay = true;
 						that.innerAudioContext.src = res.filename;
@@ -201,6 +206,7 @@ export default {
 						});   
 					},
 					fail: function(res) {
+						console.log(res)
 						uni.hideLoading()
 						uni.showToast({
 							title:"播放失败",
@@ -210,7 +216,6 @@ export default {
 					}
 			})
 		}
-	
 	}
 }
 </script>
@@ -226,11 +231,7 @@ export default {
 		width: 100%;
 	}
 	.item{
-		overflow: scroll;
-		/* 单行展示 */
-		display: flex;
-		/* 内容两侧 */
-		justify-content: space-between;
+		
 	}
 	.btn{
 		/* 自动换行 */
@@ -252,6 +253,7 @@ export default {
 		text-indent: 2em;
 		margin-left: 5%;
 		margin-right: 5%;
+		margin-bottom: 5%;
 	}
 	.titleCountry{
 		padding:15px;
