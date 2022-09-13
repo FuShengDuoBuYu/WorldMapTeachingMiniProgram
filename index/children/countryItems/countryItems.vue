@@ -18,9 +18,9 @@
 		</view>
 		<view style="width: 100%;display: flex;">
 			<button class="btn" hover-class="button-hover" style="background-color: #ff1244;" @click="showDialog('环境污染')">环境污染</button>
+			<button class="btn" hover-class="button-hover" style="background-color: #019fa0;" @click="showDialog('著名景点')">著名景点</button>
 		</view>
 	</view>
-	
 </template>
 
 <script>

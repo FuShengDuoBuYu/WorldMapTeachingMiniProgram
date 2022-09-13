@@ -19,14 +19,18 @@
 			<text style="font-size: x-large;color: red;">{{placeName}}</text>
 		</view>
 		<image class="image" :src="recordImage" @click="previewImage"></image>
-		<text class="text">{{recordDescription}}</text>
+		<view style="display:flex;justify-content:center">
+			<text class="title">{{recordTitle}}</text>
+		</view>
+		<view style="display:flex;justify-content:center">
+			<text class="text">{{recordDescription}}</text>
+		</view>
 	</view>
 </template>
 
 <script>
 	import * as echarts from 'echarts/echarts.min.js'; /*echarts.min.js为在线定制*/
 	import mpvueEcharts from 'mpvue-echarts';
-	import * as worldJson from 'echarts/map/json/world.json'; /*echart.min.js为在线定制*/
 	import * as worldRecordsJson from "./data/worldRecords.json";
 	import { getWorldRecords, getWorldRecord,images,ifPlacePoint } from "./data/data.js";
 	import {chartOptions} from "./data/chartOption.js"
@@ -44,6 +48,7 @@
 			placeName: function (newVal, oldVal) {
 				this.recordImage = getWorldRecord(newVal).image;
 				this.recordDescription = getWorldRecord(newVal).description;
+				this.recordTitle = getWorldRecord(newVal).title;
 				this.refreshMap();
 			}
 		},
@@ -59,6 +64,7 @@
 				ifShowCanvasChart:true,
 				recordImage:'',
 				recordDescription:'',
+				recordTitle:'',
 				options: chartOptions,
 				timer: {},
 				bgImage:images.bgImage
@@ -98,7 +104,6 @@
 						color = color === 'yellow' ? 'red' : 'yellow';
 						this.options.series[0].data = [];
 						this.options.geo.regions = regions;
-						console.log(this.options)
 						this.chart.setOption(this.options);
 						this.$refs.echarts.setChart(this.chart);
 					}, 1000);
@@ -115,7 +120,6 @@
 						this.options.series[0].data = (this.options.series[0].data.length == 0?seriesData:[])
 						// this.options.series[0].data.length == 0?ifPlacePoint(this.placeName):[];
 						this.options.geo.regions = regions;
-						console.log(this.options)
 						this.chart.setOption(this.options);
 						this.$refs.echarts.setChart(this.chart);
 					}, 2500);
@@ -159,7 +163,6 @@
 				this.$refs.echarts.setChart(this.chart);
 				//表格绑定点击事件
 				this.chart.on('click',function(e){
-					console.log(e.name)
 					this.placeName = e.name;
 				})
 			}
@@ -182,7 +185,7 @@
 		top: 0;
 		left: 0;
 		z-index: -1;
-		opacity: 0.8;
+		opacity: 0.5;
 	}
 
 	.image{
@@ -195,5 +198,14 @@
 		margin : 5%;
 		/* 加粗 */
 		font-weight: bold;
+		/* 每段缩进 */
+		text-indent: 2em;
+	}
+	.title{
+		color:red;
+		font-size:larger;
+		font-weight:bold;
+		/* 居中 */
+		text-align: center;
 	}
 </style>

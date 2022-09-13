@@ -53,7 +53,6 @@
 				if(ifNameIsCountry(locationName.match(/\(([^)]*)\)/)[1])==true){
 					//定时执行
 					this.timer = setInterval(()=>{
-						console.log(locationName)
 						//修改options中的geo的region内容
 						let regions = [{
 							name: locationName.match(/\(([^)]*)\)/)[1],
@@ -94,7 +93,6 @@
 						color = (color =='yellow'?'white':'yellow')
 						this.options.geo.regions = regions;
 						this.options.series[0].data = seriesData;
-						console.log(this.options)
 						//配置图表
 						this.chart.setOption(this.options);
 						this.$refs.echarts.setChart(this.chart);
@@ -131,7 +129,6 @@
 				this.$refs.echarts.setChart(this.chart);
 				//表格绑定点击事件
 				this.chart.on('click',function(e){
-					console.log(e.name)
 					//查看用户点击的是否是6个重点国家
 					if(
 						e.name=="China"||

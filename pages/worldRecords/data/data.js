@@ -1,73 +1,88 @@
 const worldRecords = {
 	"亚马孙河":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Amazon_River.png",
-		description:"世界流量最大，流域面积最广"
+		title:"世界流量最大，流域面积最广",
+		description:"亚马孙河（英语：Amazon River），位于南美洲北部，是世界上流量、流域最大、支流最多的河流。由于河流长度测量方法并无定论，亚马孙河河长便有着多种不同的说法，其中之一即为常见的6400公里。"
 	},
 	"亚马孙平原":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Amazon_Plain.jpg",
-		description:"面积最大"
+		title:"面积最大",
+		description:"亚马孙平原（英语：Amazon Plain），位于南美洲北部，亚马孙河中下游，介于圭亚那高原和巴西高原之间，西接安第斯山，东滨大西洋，跨居巴西、秘鲁、哥伦比亚和玻利维亚四国领土，面积达560万平方千米（其中巴西境内220多万平方千米，约占该国领土1/3），是世界上面积最大的冲积平原。"
 	},
 	"喜马拉雅山脉":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Himalayas.jpg",
-		description:"最高山脉"
+		title:"最高山脉",
+		description:"喜马拉雅山脉 （梵语：hima alaya，意为雪域），藏语意为“雪的故乡”。位于青藏高原南巅边缘，是世界海拔最高的山脉。是东亚大陆与南亚次大陆的天然界山，也是中国与印度、尼泊尔、不丹、巴基斯坦等国的天然国界，西起克什米尔的南迦－帕尔巴特峰（海拔8125米），东至雅鲁藏布江大拐弯处的南迦巴瓦峰（海拔7782米），全长2450千米，宽200～350千米。"
 	},
 	"伏尔加河":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Volga_River.jpg",
-		description:"世界最长内流河"
+		title:"世界最长内流河",
+		description:"伏尔加河(俄语：Волга；英语：Volga River)，又译窝瓦河，位于俄罗斯的西南部的高加索地区，全长3692千米，也是欧洲最长的河流。更是世界最长、流域最广的内流河，伏尔加河发源于莫斯科西北面的瓦尔代丘陵，受周围地势的影响，这条河自北向南流入里海。沿岸城镇有伏尔加格勒（原斯大林格勒），是俄罗斯重要工业城市之一。伏尔加河在俄罗斯的国民经济和人民的生活中起着非常重要的作用，因而，俄罗斯人将伏尔加河称为“母亲河”，伊里亚·叶菲莫维奇·列宾也曾画过世界名画《伏尔加河上的纤夫》。"
 	},
 	"马里亚纳海沟":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Mariana_Trench.jpg",
-		description:"世界最深的海沟"
+		title:"世界最深的海沟",
+		description:"马里亚纳海沟（Mariana Trench，Marianas Trench），又名玛利亚娜海沟。位于11°20′N，142°11.5′E，即菲律宾东北、马里亚纳群岛附近的太平洋底，北起硫黄岛、西南至雅浦岛附近。其北部有阿留申、千岛、小笠原等海沟，南有新不列颠和新赫布里底等海沟，全长2550千米，为弧形，平均宽70千米。据估计这条海沟已形成6000万年。"
 	},
 	"尼罗河":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/the_Nile.jpg",
-		description:"世界第一长河"
+		title:"世界第一长河",
+		description:"尼罗河（Nile）是一条流经非洲东部与北部的河流，自南向北注入地中海。与中非地区的刚果河以及西非地区的尼日尔河并列非洲最大的三个河流系统。尼罗河长6670公里，是世界上最长的河流。2007年虽有来自巴西的学者宣称亚马逊河长度更胜一筹，但尚未获得全球地理学界的普遍认同。尼罗河有两条主要的支流，白尼罗河和青尼罗河。发源于埃塞俄比亚高原的青尼罗河是尼罗河下游大多数水和营养的来源，但是白尼罗河则是两条支流中最长的。尼罗鳄居于此地。"
 	},
 	"青藏高原":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Qinghai_Tibet_Plateau.jpg",
-		description:"世界最高的高原"
+		title:"世界最高的高原",
+		description:"青藏高原（Qinghai–Tibet Plateau），亚洲内陆高原，是中国最大、世界海拔最高的高原，被称为“世界屋脊”、“第三极”。南起喜马拉雅山脉南缘，北至昆仑山、阿尔金山脉和祁连山北缘，西部为帕米尔高原和喀喇昆仑山脉，东及东北部与秦岭山脉西段和黄土高原相接，介于北纬26°00′～39°47′，东经73°19′～104°47′之间。青藏高原东西长约2800千米，南北宽约300～1500千米，总面积约250万平方千米，地形上可分为羌塘高原、藏南谷地、柴达木盆地、祁连山地、青海高原和川藏高山峡谷区等6个部分，包括中国西藏全部和青海、新疆、甘肃、四川、云南的部分以及不丹、尼泊尔、印度、巴基斯坦、阿富汗伊斯兰共和国、塔吉克斯坦、吉尔吉斯斯坦的部分或全部。"
 	},
 	"乞拉朋齐":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Kilapinqi.jpg",
-		description:"世界“雨极”"
+		title:"世界“雨极”",
+		description:"乞拉朋齐（Cherrapunji）位于印度东北部梅加拉亚邦（Meghalaya），坐落在布拉马普特拉河（the Brahmaputra）南侧东西走向的卡西山地（the Khasi Hills）南坡的一袋形山坳中，海拔1313米。纬度为北纬25.3 度， 经度为东经91.7 度。"
 	},
 	"怀厄莱阿莱":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Wyele_Alai.jpg",
-		description:"世界“湿极”"
+		title:"世界“湿极”",
+		description:"怀厄莱阿莱位于美国夏威夷群岛考爱岛的威阿列勒山东北坡，被称为世界的“湿极”。平均年雨量12244毫米，每年平均有335天下雨，是世界上雨量最多的地方之一。"
 	},
 	"奥伊米亚康":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Oymyakon.jpg",
-		description:"北半球“寒极” -71.0摄氏度"
+		title:"北半球“寒极” -71.0摄氏度",
+		description:"奥伊米亚康，是俄罗斯西伯利亚东北部一个盆地，海拔约741米。在北极圈以南350公里，属俄罗斯的萨哈共和国管辖。奥伊米亚康位于西伯利亚因迪吉尔卡河上游同名盆地中央，东、南、西三面较高，仅北面地势较低，造成其气候极度严寒，和上扬斯克并称为北半球的“寒极”。"
 	},
 	"阿塔卡马沙漠":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Atacama_Desert.jpg",
-		description:"世界“旱极”"
+		title:"世界“旱极”",
+		description:"阿塔卡马沙漠（Atacama Desert），西班牙语作Desierto de Atacama。是南美洲西海岸中部的沙漠地区，在安第斯山脉和太平洋之间南北绵延约1000千米，总面积约为18.13万平方千米，主体位于智利境内，也有部分位于秘鲁、玻利维亚和阿根廷。\n介于南纬18°-28°之间，南北长约1100千米，从沿海到东部山麓宽100多千米。在副热带高气压带下沉气流、离岸风和秘鲁寒流综合影响下，使本区成为世界最干燥的地区之一，被称为世界的“干极”，且在大陆西岸热带干旱气候类型中具有鲜明的独特性，形成了沿海、纵向狭长的沙漠带。"
 	},
 	"死谷国家公园":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Death_Valley_National_Park.jpg",
-		description:"世界“热极”56.7摄氏度"
+		title:"世界“热极”56.7摄氏度",
+		description:"美国死亡谷是北美洲最炽热、最干燥的地区。由于这里夏天的气温相当高，经常在华氏100度（摄氏37.7℃）以上，曾经有许多人因为探险走进死亡谷后迷路，无法走出来，结果活活热死和饿死在这里。\n夏季期间，因为高温的影响，大量上升的暖气流便在谷地上方形成云团，等到聚集足够的云量，便降下雨量造成短暂的骤雨，就这样，谷地里的野花和植物得到雨水滋润，开遍了整个死亡谷。"
 	},
 	"刚果盆地":{
 		image: "http://106.15.35.61:81/projects/world_map/images/world_record/Congo_Basin.jpg",
-		description: "世界最大的盆地"
+		title:"世界第一大盆地",
+		description: "刚果盆地(英语：Congo Basin；斯瓦希里语：Bonde la Kongo；法语：Bassin du Congo)，非洲最大盆地，属于世界十大盆地（曾称为世界最大盆地），又称扎伊尔盆地。位于非洲中西部，呈方形，赤道横贯中部。面积约337万平方千米。位于下几内亚高原、南非高原、东非高原及低小的阿赞德高原之间，位于喀麦隆、中非共和国、刚果民主共和国、赤道几内亚、加蓬和刚果共和国。"
 	},
 	"几内亚湾":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Gulf_of_Guinea.jpg",
-		description:"世界最大的内陆湾"
+		description:"几内亚湾——非洲最大的海湾。几内亚湾西非海岸外的大西洋海湾。从赤道附近的洛佩斯角(Cap Lopez)向西延伸至西经7°的帕尔马斯角(Cape Palmas)。西起利比里亚的帕尔马斯角，东止加蓬的洛佩斯角。沿岸国家有利比里亚、科特迪瓦、加纳、多哥、贝宁、尼日利亚、喀麦隆、赤道几内亚、加蓬，以及湾头的岛国圣多美和普林西比。有沃尔特河、尼日尔河、萨纳加河、刚果河和奥果韦河等流入，为海湾带来大量有机沉积物，经过数百万年形成了石油，令沿岸国家近年备受国际社会重视。",
+		title:"世界最大的内陆湾"
 	},
 	"波斯湾":{
 		image:"http://106.15.35.61:81/projects/world_map/images/world_record/Persia_%20Gulf.jpg",
-		description:"世界最大的湾"
+		title:"世界上最大的湾",
+		description:"波斯湾，是阿拉伯海西北伸入亚洲大陆的一个海湾，位于伊朗高原和阿拉伯半岛之间，西北起阿拉伯河河口，东南至霍尔木兹海峡，长970多千米，宽56-338千米，面积24.1万平方千米。平均水深约40米，最大深度104米。\n阿拉伯人称作这一地区为阿拉伯湾，但按亚洲地理学的国际性外海命名规则，已用阿拉伯命名了一个巨大海域（阿拉伯海其实是个大湾），因此采用波斯（伊朗古称）之名命名该海湾，更好标识、区别、记忆。"
 	},
 	"安第斯山脉":{
 		image: "http://106.15.35.61:81/projects/world_map/images/world_record/Andes.jpg",
-		description:"世界最长山脉"
+		title:"世界最长的山脉",
+		description:"安第斯山脉（盖丘亚语：Andes；奇楚亚语：Antis），属于科迪勒拉山系，也称安弟斯山脉或安蒂斯山脉，位于南美洲的西岸，从北到南全长8900余千米，是世界上最长的山脉。安第斯山脉从南美洲的南端到最北面的加勒比海岸绵亘约形成一道连续不断的屏障。安第斯山脉将狭窄的西海岸地区同大陆的其余部分分开，是地球重要的地形特征之一，它对山脉本身及其周围地区的生存条件产生深刻的影响。"
 	}
 }
 
 //导出获取所有地名的方法
 export function getWorldRecords() {
-	console.log(Object.keys(worldRecords))
 	return Object.keys(worldRecords);
 }
 
