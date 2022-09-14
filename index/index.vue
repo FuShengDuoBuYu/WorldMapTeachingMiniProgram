@@ -31,7 +31,7 @@
 		  <!--drawer content-->  
 		  <cover-view class="drawer_content">  
 			<!-- 填充内容 -->
-			<item-dialog :title="title" :countryName = "countryName"></item-dialog>
+			<item-dialog ref="dialog" :title="title" :countryName = "countryName"></item-dialog>
 		  </cover-view>  
 		</cover-view>
 	</view>
@@ -123,6 +123,10 @@
 				// console.log(this.bgImage)
 				this.title = item
 				this.showDialog = !this.showDialog
+				if(this.showDialog==false){
+					this.$refs.dialog.stopSpeech();
+				}
+				
 			},  
 			//canvas显示与否
 			ifShowCanvas(ifShowSelect){
