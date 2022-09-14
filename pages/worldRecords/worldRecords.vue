@@ -18,9 +18,12 @@
 			<text>您当前选择的是</text>
 			<text style="font-size: x-large;color: red;">{{placeName}}</text>
 		</view>
-		<image class="image" :src="recordImage" @click="previewImage"></image>
-		<view style="display:flex;justify-content:center">
+		<view class="image_box">
+			<image class="image" mode="widthFix" :src="recordImage" @click="previewImage"></image>
+		</view>
+		<view style="display:flex;justify-content:space-around">
 			<text class="title">{{recordTitle}}</text>
+			<uni-icons v-if="placeName!='暂未选择'" type="sound" size="30" @click="startToSpeech"></uni-icons>
 		</view>
 		<view style="display:flex;justify-content:center">
 			<text class="text">{{recordDescription}}</text>
@@ -29,6 +32,8 @@
 </template>
 
 <script>
+	var plugin = requirePlugin("WechatSI")
+	let manager = plugin.getRecordRecognitionManager()
 	import * as echarts from 'echarts/echarts.min.js'; /*echarts.min.js为在线定制*/
 	import mpvueEcharts from 'mpvue-echarts';
 	import * as worldRecordsJson from "./data/worldRecords.json";
@@ -67,14 +72,46 @@
 				recordTitle:'',
 				options: chartOptions,
 				timer: {},
-				bgImage:images.bgImage
+				bgImage:images.bgImage,
+				innerAudioContext: uni.createInnerAudioContext(),
 			}
 		},
 		onLoad() {
 			
 		},
+		onUnload(){
+			console.log("stop111")
+			this.innerAudioContext.pause()
+		},
 		//监听
 		methods: {
+			//开始播放
+			startToSpeech(){
+				this.innerAudioContext.pause()
+				uni.showLoading({
+					title: '加载中'
+				});
+				var that = this
+				plugin.textToSpeech({
+					lang: "zh_CN",
+					tts: true,
+					content: that.recordDescription,
+					success: function(res) {
+						that.innerAudioContext.autoplay = true;
+						that.innerAudioContext.src = res.filename;
+						uni.hideLoading(); 
+					},
+					fail: function(res) {
+						console.log(res)
+						uni.hideLoading()
+						uni.showToast({
+							title:"播放失败",
+							icon:"error",
+							duration:1500
+						})
+					}
+				})
+			},
 			//地图图片
 			showMapImage(){
 				clearInterval(this.timer)
@@ -189,10 +226,17 @@
 		opacity: 0.5;
 	}
 
-	.image{
+	.image_box {
 		width: 90%;
-		margin : 5%;
-		border-radius: 10px;
+		height: auto;
+		margin: 5%;
+		border-radius: 10rpx;
+	}
+	
+	.image{
+		width: 100%;
+		height: 100%;
+		display: block;
 	}
 	.text{
 		width: 90%;
