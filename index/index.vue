@@ -90,9 +90,14 @@
 		},
 		onLoad() {
 			uni.$on('chooseLocation',(data)=>{
+				if(this.ifMarkCountry(data.country)){
+					uni.$emit('showDialog', {
+						item:""
+					}) 
+				}
 				this.userChooseLoacation = data.country; 
 				this.searchItem = data.country;
-				console.log(this.ifMarkCountry(data.country))
+				
 			});
 			uni.$on('showDialog',(data)=>{
 				this.showDialog = true;
@@ -128,8 +133,22 @@
 				this.ifShowCanvasChart = !ifShowSelect
 			},
 			//查看是否是重点国家
-			ifMarkCountry(country){
-				return ["China","United Kingdom","Germany","Australia","United States","Brazil"].includes(country)
+			ifMarkCountry(countryName) {
+				let country = countryName.match(/\(([^)]*)\)/)[1]
+				//查看用户点击的是否是6个重点国家
+				if(
+					(country=="China"||
+					country=="United Kingdom"||
+					country=="Germany"||
+					country=="Australia"||
+					country=="United States"||
+					country=="Brazil"
+				)&&countryName==this.userChooseLoacation){
+					return true
+				}
+				else{
+					return false
+				}
 			}
 		}
 	}

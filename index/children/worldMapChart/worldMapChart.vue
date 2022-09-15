@@ -136,19 +136,7 @@
 				this.$refs.echarts.setChart(this.chart);
 				//表格绑定点击事件
 				this.chart.on('click',function(e){
-					//查看用户点击的是否是6个重点国家
-					if(
-						e.name=="China"||
-						e.name=="United Kingdom"||
-						e.name=="Germany"||
-						e.name=="Australia"||
-						e.name=="United States"||
-						e.name=="Brazil"
-					){
-						uni.$emit('showDialog', {
-							item:""
-						}) 
-					}
+					
 					uni.$emit("chooseLocation", {
 						country:getCountryNameByEnglish(e.name)
 					});
