@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<image class="bg" :src="backgroundImage"></image>
-		<view style="display: flex;justify-content: space-around;margin: 3%;">
+		<view style="display: flex;justify-content: space-between;margin-left: 3%;">
 			<text style="font-size: xx-large;color: beige;font-weight: bold;">世界地图册</text>
-			<button size="mini" type="primary" @click="switchTo('/pages/worldRecords/worldRecords')">切换地图</button>
+			<button size="mini" style="align-self: center;" type="primary" @click="switchTo('/pages/worldRecords/worldRecords')">切换地图</button>
 		</view>
 		<!-- 顶部搜索框和按钮 -->
 		<view z-index="99" style="display: flex;width:100%;justify-content:center;margin:auto">
@@ -90,14 +90,9 @@
 		},
 		onLoad() {
 			uni.$on('chooseLocation',(data)=>{
-				uni.showLoading({
-					title:'请稍后',
-				})
-				setTimeout(function () {
-					uni.hideLoading();
-				}, 1500);
 				this.userChooseLoacation = data.country; 
 				this.searchItem = data.country;
+				console.log(this.ifMarkCountry(data.country))
 			});
 			uni.$on('showDialog',(data)=>{
 				this.showDialog = true;
@@ -114,7 +109,7 @@
 			},
 			//进入页面
 			switchTo(url){
-				uni.redirectTo({
+				uni.reLaunch({
 					url:url
 				})
 			},
@@ -131,6 +126,10 @@
 			//canvas显示与否
 			ifShowCanvas(ifShowSelect){
 				this.ifShowCanvasChart = !ifShowSelect
+			},
+			//查看是否是重点国家
+			ifMarkCountry(country){
+				return ["China","United Kingdom","Germany","Australia","United States","Brazil"].includes(country)
 			}
 		}
 	}

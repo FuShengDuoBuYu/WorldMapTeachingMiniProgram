@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<image class="bg" :src="bgImage"></image>
-		<view style="display: flex;justify-content: space-around;margin: 3%;">
+		<view style="display: flex;justify-content: space-between;margin: 3%;">
 			<text style="font-size: xx-large;color: beige;font-weight: bold;">世界之最</text>
-			<button size="mini" type="primary" @click="switchTo('/index/index')">切换地图</button>
+			<button style="align-self: center;" size="mini" type="primary" @click="switchTo('/index/index')">切换地图</button>
 		</view>
 		<!-- 顶部搜索框和按钮 -->
 		<view style="display: flex;width:100%;justify-content:center;margin:auto">
@@ -51,10 +51,18 @@
 				}
 			},
 			placeName: function (newVal, oldVal) {
+				//停止语音
+				this.innerAudioContext.pause();
 				this.recordImage = getWorldRecord(newVal).image;
 				this.recordDescription = getWorldRecord(newVal).description;
 				this.recordTitle = getWorldRecord(newVal).title;
 				this.refreshMap();
+				uni.showLoading({
+					title:'请稍后',
+				})
+				setTimeout(function () {
+					uni.hideLoading();
+				}, 1500);
 			}
 		},
 		data() {
@@ -85,6 +93,59 @@
 		},
 		//监听
 		methods: {
+			//获取region嵌套关系
+			getRegions(placeName,color){
+				if(placeName=="亚马孙平原"){
+					return [
+						{
+							name: placeName,
+							itemStyle: {
+								areaColor: 'red',
+								borderColor:color,
+								borderWidth:1
+							}
+						},
+						{
+							name: "亚马孙河",
+							itemStyle: {
+								areaColor: 'red',
+								borderColor:'red',
+								borderWidth:1
+							}
+						}
+					]
+				}
+				else if(placeName=="安第斯山脉"){
+					return [
+						{
+							name: placeName,
+							itemStyle: {
+								areaColor: 'red',
+								borderColor:color,
+								borderWidth:1
+							}
+						},
+						{
+							name: "阿塔卡马沙漠",
+							itemStyle: {
+								areaColor: 'red',
+								borderColor:'red',
+								borderWidth:1
+							}
+						}
+					]
+				}
+				else{
+					return [{
+							name: placeName,
+							itemStyle: {
+								areaColor: 'red',
+								borderColor:color,
+								borderWidth:1
+							}
+						}];
+				}
+			},
 			//开始播放
 			startToSpeech(){
 				this.innerAudioContext.pause()
@@ -131,14 +192,7 @@
 				if(ifPlacePoint(this.placeName).length==0){
 					this.timer = setInterval(() => {
 						//修改options中的geo的region内容
-						let regions = [{
-							name: this.placeName,
-							itemStyle: {
-								areaColor: 'red',
-								borderColor:color,
-								borderWidth:1
-							}
-						}];
+						let regions = this.getRegions(this.placeName,color)
 						color = color === 'yellow' ? 'red' : 'yellow';
 						this.options.series[0].data = [];
 						this.options.geo.regions = regions;
@@ -148,19 +202,18 @@
 				}
 				else{
 					let pointInfo = ifPlacePoint(this.placeName);
-					this.timer = setInterval(() => {
-						//修改options中的geo的region内容
-						let regions = [];
-						let seriesData = {
-							name:pointInfo[0],
-							value:[pointInfo[0],pointInfo[1],pointInfo[2]]
-						}
-						this.options.series[0].data = (this.options.series[0].data.length == 0?seriesData:[])
-						// this.options.series[0].data.length == 0?ifPlacePoint(this.placeName):[];
-						this.options.geo.regions = regions;
-						this.chart.setOption(this.options);
-						this.$refs.echarts.setChart(this.chart);
-					}, 2500);
+					
+					//修改options中的geo的region内容
+					let regions = [];
+					let seriesData = [{
+						name:pointInfo[0],
+						value:[pointInfo[0],pointInfo[1],pointInfo[2]]
+					}]
+					this.options.series[0].data = (this.options.series[0].data.length == 0?seriesData:[])
+					this.options.geo.regions = regions;
+					this.chart.setOption(this.options);
+					this.$refs.echarts.setChart(this.chart);
+					
 				}
 			},
 			//预览图片
@@ -172,7 +225,7 @@
 			},
 			//进入页面
 			switchTo(url){
-				uni.redirectTo({
+				uni.reLaunch({
 					url:url
 				})
 			}, 
@@ -237,6 +290,7 @@
 		width: 100%;
 		height: 100%;
 		display: block;
+		border-radius: 10rpx;
 	}
 	.text{
 		width: 90%;

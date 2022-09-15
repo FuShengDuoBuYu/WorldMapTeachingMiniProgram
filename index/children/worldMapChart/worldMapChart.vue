@@ -27,6 +27,12 @@
 		//监听chooseLocation的变化
 		watch: {
 			chooseLocation(newVal, oldVal) {
+				uni.showLoading({
+					title:'请稍后',
+				})
+				setTimeout(function () {
+					uni.hideLoading();
+				}, 1500);
 				this.refreshMapOptions(newVal)
 			},
 		},

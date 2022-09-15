@@ -24,7 +24,6 @@ import {getWorldCountryNameList} from '@/index/children/worldMapChart/data/world
 				uni.$emit("chooseLocation",{
 					country:location
 				});
-				console.log(getCurrentPages())
 				uni.navigateBack({
 					delta:1
 				})

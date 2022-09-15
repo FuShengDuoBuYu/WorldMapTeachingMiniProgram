@@ -1,13 +1,13 @@
 <template>
 	<cover-view class="contnet">
 		<cover-image @click="preloadImage" class="image" :src="imageSrc"></cover-image>
-		<cover-view style="display: flex;justify-content: space-around;">
-			<cover-view>
-				<cover-image style="height: 5vh;margin-top: 1vh;" @click="startToSpeech" :src="imageIcon"></cover-image>
-			</cover-view>
+		<cover-view style="display: flex;justify-content: space-around;align-items: baseline;margin: 2vh;">
 			<cover-view class="titleCountry">{{countryName}}</cover-view>
+			<cover-view>
+				<cover-image style="height: 3vh;width: 3vh;" @click="startToSpeech" :src="imageIcon"></cover-image>
+			</cover-view>
 		</cover-view>
-		<cover-view class="drawer_title">
+		<cover-view class="drawer_title" v-if="title!=''">
 			{{title}}
 		</cover-view>
 		<!-- 循环展示所有的item -->
@@ -36,7 +36,7 @@ export default {
 	data() {
 		return {
 			innerAudioContext: uni.createInnerAudioContext(),
-			imageIcon:"data:image/png;base64,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"
+			imageIcon:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAA65JREFUaEPtmVvITVEQx3/fC8oLL+7XkAgpJEXILZJcogh54ksSQlJCESKSkEspCiGekFtELoVESPHgmkSUpPCiv2Zpfdu+nrOPs78683bWnrXW/79mZs2sOXU0cqlr5PipEai2BWsWSGGB9kAn4HYK3cwqlbRAL2AHMA54CXTNjC7FhEoRmApsBzp7GEYC11JgyqRSCQKrgY0hKJII9AaeZkIPuV6jHYBNwGwPxDKzhIbiCNwDBgAHgPlZSORlgWl26j1tcwXscqAJcNXG4gicAKab3kNgNPApDZFyCQig3EVgnewGVgHfgBEpCWjuYWCOt85Q4GYSiXIIjAHWAMNsk3eA/F9AnGQhoDk6iK3e/GbAjzgSYQRaA5uBLgnsBc7JGQP/LDAnKwFNHwtcsHWOAbOyElgHrE0ynfddp67gDZNSCGidemCvLbgE2BmFJ8wCPgEloq8Rk59Ydn0bQzaKwDzgELALWBwxX9+lJ+kLPA7TSyJQToxovygCCvSFBugF0CMEnFz4DiCX3mDx9o9atQgIyGlgSgIJZfOlwHOgD/AzyKCaBITFd9eTwIwAwIHAXRubCxwpGgHhUZwpUCVhIE8BSpRngYlFJNDdXETYLlr16uOUC8mVdFl0LCIBYToHjDdwTQO+rhJDpYZE9ZYS5l+pdgw4IHIhuZJEj583HkYVeSr2JKqRrhSRwGRA2VwyyAOs3y2Bz/ZtEaAruHAW8Ano5rnvYWwBfLHfyh0uQ/8ZKqILKYG98gj0Bx7Y7+HA9SJawH8PNAe+eyB967QD3heNgILWnfh+YIEP0HKEAvx14I1dGBfyTz/o/wJZ6ETmlxJhlWlhS4lull0nmbtEVaRlF3OtgI8Bn8zyM6qcPgrMtIXOAxNCFlWJfaPccloVYlyvRhlSd3aDm8EDE0VgC7DSAlaBGyaXLPPqW8kPmrSnvQLYFqJc6pNyn9cfinuyhiaytsAeQBkwSfyHvWp1EfmQwgJx644CLpuCygu1KSOl3Cej+jhqg+jZJ3lkJFQWS7JaQOu5toyqTlWfsVIuAS3ez0ioHeLEuVQWAjoI1yBTw0BPyETJg4DbxAegMfnx8ZSdOdcb1TzlhvWJyE0hTwJaUi6galH1jESu5CwT1xu9BQxJuJVCOeVNQJsoCNVlDv6hUfj2un9C8t+DwGBvMIlAWq9poFcJC7gNlMVlCVcutAlcsSUBDk6qJAG3l960v+yKzQW0v8j/IJA76BqBih5pxsVrLpTxwHJX/w0FQeYxnkJifQAAAABJRU5ErkJggg=="
 		}
 	},
 	//父组件的参数
@@ -263,10 +263,7 @@ export default {
 		margin-bottom: 5%;
 	}
 	.titleCountry{
-		padding:15px;
 		font: 20px "microsoft yahei";  
-		text-align: center;  
-		height: 5vh;
 		/* 红色 */
 		color: red;
 	}
