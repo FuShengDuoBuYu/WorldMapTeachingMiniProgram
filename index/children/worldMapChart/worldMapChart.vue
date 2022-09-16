@@ -28,9 +28,11 @@
 		watch: {
 			chooseLocation(newVal, oldVal) {
 				console.log(newVal)
-				uni.showLoading({
-					title:'请稍后',
-				})
+				setTimeout(function(){
+					uni.showLoading({
+						title:'请稍后',
+					})
+				},500)
 				setTimeout(function () {
 					uni.hideLoading();
 				}, 1500);
