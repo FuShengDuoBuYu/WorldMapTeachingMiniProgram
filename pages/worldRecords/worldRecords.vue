@@ -3,7 +3,7 @@
 		<image class="bg" :src="bgImage"></image>
 		<view style="display: flex;justify-content: space-between;margin: 3%;">
 			<text style="font-size: xx-large;color: beige;font-weight: bold;">世界之最</text>
-			<button style="align-self: center;" size="mini" type="primary" @click="switchTo('/index/index')">切换地图</button>
+			<button style="align-self: center;" size="mini" type="primary" @click="switchTo('/index/index')">切换世界地图</button>
 		</view>
 		<!-- 顶部搜索框和按钮 -->
 		<view style="display: flex;width:100%;justify-content:center;margin:auto">

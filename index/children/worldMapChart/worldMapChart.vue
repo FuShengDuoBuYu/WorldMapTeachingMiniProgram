@@ -27,6 +27,7 @@
 		//监听chooseLocation的变化
 		watch: {
 			chooseLocation(newVal, oldVal) {
+				console.log(newVal)
 				uni.showLoading({
 					title:'请稍后',
 				})

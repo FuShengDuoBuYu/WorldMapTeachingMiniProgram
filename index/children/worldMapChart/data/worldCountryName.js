@@ -250,25 +250,6 @@ export function getWorldCountryNameList() {
     for (let key in worldCountry) {
         list.push(worldCountry[key]+'('+key+')');
     }
-    //将六个重点国家的城市名字也放进去
-    for (let key in ChinaCity) {
-        list.push(ChinaCity[key][0] + '(' + key + ')');
-    }
-    for (let key in EnglandCity) {
-        list.push(EnglandCity[key][0]  + '(' + key + ')');
-    }
-    for (let key in GermanCity) {
-        list.push(GermanCity[key][0]  + '(' + key + ')');
-    }
-    for (let key in AustraliaCity) {
-        list.push(AustraliaCity[key][0]  + '(' + key + ')');
-    }
-    for (let key in AmericaCity) {
-        list.push(AmericaCity[key][0]  + '(' + key + ')');
-    }
-    for (let key in BrazilCity) {
-        list.push(BrazilCity[key][0]  + '(' + key + ')');
-    }
     return list;
 }
 
@@ -318,4 +299,66 @@ export function findCityByName(name){
             return [BrazilCity[key],"Brazil"]
         }
     }
+}
+
+//返回六个重点国家的城市
+export function getCountryCities(name) {
+    console.log(name)
+    let list = [];
+    //如果name为空，就返回六个国家的城市
+    if (name == '') {
+        for (let key in ChinaCity) {
+            list.push(ChinaCity[key][0] + '(' + key + ')');
+        }
+        for (let key in EnglandCity) {
+            list.push(EnglandCity[key][0] + '(' + key + ')');
+        }
+        for (let key in GermanCity) {
+            list.push(GermanCity[key][0] + '(' + key + ')');
+        }
+        for (let key in AustraliaCity) {
+            list.push(AustraliaCity[key][0] + '(' + key + ')');
+        }
+        for (let key in AmericaCity) {
+            list.push(AmericaCity[key][0] + '(' + key + ')');
+        }
+        for (let key in BrazilCity) {
+            list.push(BrazilCity[key][0] + '(' + key + ')');
+        }
+        return list;
+    }
+    //否则返回对应国家的城市
+    else {
+        if (name == 'China') {
+            for (let key in ChinaCity) {
+                list.push(ChinaCity[key][0] + '(' + key + ')');
+            }
+        }
+        if (name == 'United Kingdom') {
+            for (let key in EnglandCity) {
+                list.push(EnglandCity[key][0] + '(' + key + ')');
+            }
+        }
+        if (name == 'Germany') {
+            for (let key in GermanCity) {
+                list.push(GermanCity[key][0] + '(' + key + ')');
+            }
+        }
+        if (name == 'Australia') {
+            for (let key in AustraliaCity) {
+                list.push(AustraliaCity[key][0] + '(' + key + ')');
+            }
+        }
+        if (name == 'United States') {
+            for (let key in AmericaCity) {
+                list.push(AmericaCity[key][0] + '(' + key + ')');
+            }
+        }
+        if (name == 'Brazil') {
+            for (let key in BrazilCity) {
+                list.push(BrazilCity[key][0] + '(' + key + ')');
+            }
+        }
+    }
+    return list;
 }

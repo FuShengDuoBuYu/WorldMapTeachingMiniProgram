@@ -3,13 +3,23 @@
 		<image class="bg" :src="backgroundImage"></image>
 		<view style="display: flex;justify-content: space-between;margin-left: 3%;">
 			<text style="font-size: xx-large;color: beige;font-weight: bold;">世界地图册</text>
-			<button size="mini" style="align-self: center;" type="primary" @click="switchTo('/pages/worldRecords/worldRecords')">切换地图</button>
+			<button size="mini" style="align-self: center;" type="primary" @click="switchTo('/pages/worldRecords/worldRecords')">切换世界之最</button>
 		</view>
 		<!-- 顶部搜索框和按钮 -->
-		<view z-index="99" style="display: flex;width:100%;justify-content:center;margin:auto">
-			<uni-icons style="width: 10%;margin-left: 3%;" type="search" size="30"></uni-icons>
-			<uni-combox @ifShowSelector="ifShowCanvas" style="width: 60%;" :candidates="candidates" placeholder="请输入要查找的内容" v-model="searchItem"></uni-combox>
-			<button size="mini" style="background-color: bisque;" hover-class="button-hover" @click="goto('/pages/chooseCountry/chooseCountry')">国家</button>
+		<view style="display: flex;justify-content: space-around;align-items: center;">
+			<view>
+				<view z-index="99" style="display: flex;width:100%;justify-content:center;margin:auto;align-items: center;">
+					<text style="margin-right: 2vw; color:beige;font-size: small;width:fit-content">国家搜索</text>
+					<uni-combox @ifShowSelector="ifShowCanvas"  :candidates="candidates" placeholder="请输入要查找的国家" v-model="searchCountry"></uni-combox>
+				</view>
+				<view z-index="99" style="display: flex;width:100%;justify-content:center;margin:auto;align-items: center;margin-top: 2vh;">
+					<text style="margin-right: 2vw;color:beige;font-size: small;">城市搜索</text>
+					<uni-combox @ifShowSelector="ifShowCanvas"  :candidates="cities" placeholder="请输入要查找的城市" v-model="searchCity"></uni-combox>
+				</view>
+			</view>
+			<view>
+				<button size="mini" style="background-color: bisque;" hover-class="button-hover" @click="goto('/pages/chooseCountry/chooseCountry')">国家</button>
+			</view>
 		</view>
 		<view style="width: 100%;height: 700rpx;">
 			<worldMapChartVue v-show="ifShowCanvasChart" :chooseLocation="userChooseLoacation"></worldMapChartVue>
@@ -43,35 +53,65 @@
 	import itemDialog from './children/itemDialog/itemDialog.vue';
 	import {images} from './data.js'
 	//引入bgImage
-	import { getWorldCountryNameList,getCountryNameByEnglish,ifNameIsCountry,findCityByName } from './children/worldMapChart/data/worldCountryName.js';
+	import { getWorldCountryNameList,getCountryNameByEnglish,ifNameIsCountry,findCityByName,getCountryCities } from './children/worldMapChart/data/worldCountryName.js';
 	export default {
 		components:{
             worldMapChartVue,
 			countryItems,
 			itemDialog
         },
-		//监听searchItem的变化
+		//监听变化
 		watch: {
-			searchItem(newVal, oldVal) {
-				let items = getWorldCountryNameList();
-				if(items.includes(newVal)) {
-					this.userChooseLoacation = newVal;
+			searchCountry(newVal, oldVal) {
+				
+				if (getCountryCities('').includes(this.searchCity)) {
+					//如果是选择了城市造成的国家变化,不处理
+					if (oldVal == '') {
+						return;
+					}
+					else {
+						let items = getWorldCountryNameList();
+						if(items.includes(newVal)) {
+							this.userChooseLoacation = newVal;
+							this.cities = getCountryCities(newVal.match(/\(([^)]*)\)/)[1])
+							this.searchCity = ''
+						}
+					}
 				}
+				else {
+					let items = getWorldCountryNameList();
+					if(items.includes(newVal)) {
+						this.userChooseLoacation = newVal;
+						this.cities = getCountryCities(newVal.match(/\(([^)]*)\)/)[1])
+						this.searchCity = ''
+					}
+				}
+				
 			},
 			userChooseLoacation(newVal,oldVal){
 				if(ifNameIsCountry(newVal.match(/\(([^)]*)\)/)[1])==true){
+					this.searchItem = newVal
 					this.countryName = newVal
 				}
 				//根据英文名找到国家名字
-				else{
-					this.countryName = getCountryNameByEnglish(findCityByName(newVal.match(/\(([^)]*)\)/)[1])[1])
+				else {
+					this.searchItem = newVal
+					this.searchCountry = getCountryNameByEnglish(findCityByName(newVal.match(/\(([^)]*)\)/)[1])[1])
+					this.countryName = this.searchCountry
+				}
+			},
+			searchCity(newVal,oldVal){
+				let items = getCountryCities('')
+				if (items.includes(newVal)) {
+					this.userChooseLoacation = newVal;
 				}
 			}
 		},
 		data() {
 			return {
-				//用户要搜索的项
-				searchItem:'',
+				searchItem: '',
+				//用户要搜索的国家
+				searchCountry:'',
 				//候选城市
 				candidates: getWorldCountryNameList(),
 				//用户选择的地点
@@ -85,7 +125,9 @@
 				ifShowCanvasChart:true,
 				backgroundImage:images.bgImage,
 				//dialog要展示的内容
-				dialogContent:''
+				dialogContent: '',
+				cities:getCountryCities(''),
+				searchCity:''
 			}
 		},
 		onLoad() {
@@ -96,7 +138,7 @@
 					}) 
 				}
 				this.userChooseLoacation = data.country; 
-				this.searchItem = data.country;
+				this.searchCountry = data.country;
 				
 			});
 			uni.$on('showDialog',(data)=>{
