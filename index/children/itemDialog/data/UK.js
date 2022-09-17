@@ -50,7 +50,7 @@ export const UKInfo = {
     },
 
     "典型动物": {
-        image: "",
+        image: ip+"animal.jpg",
 
         description: {
             "1": "英国代表性动物是知更鸟。知更鸟是英国的国鸟，英国皇室的标志是狮子。",

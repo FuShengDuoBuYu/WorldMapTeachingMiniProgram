@@ -46,7 +46,7 @@ export const GermanyInfo = {
     },
 
     "典型动物": {
-        image: "",
+        image: ip+"animal.jpg",
 
         description: {
             "1": "白鹳（英文名称：White Stork）是欧洲白鹳和东方白鹳的通称。属大型涉禽。其羽毛以白色为主，翅膀具黑羽，成鸟具细长的红腿和细长的红喙。共有三个亚种，大小略有不同。嘴长而粗壮，在高树或岩石上筑大型的巢，飞时头颈伸直。",

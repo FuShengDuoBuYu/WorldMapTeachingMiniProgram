@@ -1,6 +1,6 @@
 <template>
 	<cover-view class="contnet">
-		<cover-image @click="preloadImage" class="image" :src="imageSrc"></cover-image>
+		<cover-image @click="preloadImage(imageSrc)" class="image" :src="imageSrc"></cover-image>
 		<cover-view style="display: flex;justify-content: space-around;align-items: baseline;margin: 2vh;">
 			<cover-view class="titleCountry">{{countryName}}</cover-view>
 			<cover-view>
@@ -12,19 +12,19 @@
 		</cover-view>
 		<!-- 循环展示所有的item -->
 		<cover-view class="item" v-for="(value,key) in textContent" :key="key">
-			<cover-view class="text">
+			<cover-view class="text" v-if="key.indexOf('animal')==-1">
 				{{value}}
 			</cover-view>
+			<cover-image @click="preloadImage(value)" class="image" :src="value" v-if="key.indexOf('animal')!=-1">
+			</cover-image>
 		</cover-view>
 	</cover-view>
 </template>
 
 
 <script>
-	//===================================
-	var plugin = requirePlugin("WechatSI")
-	let manager = plugin.getRecordRecognitionManager()
-	// ====================================
+var plugin = requirePlugin("WechatSI")
+let manager = plugin.getRecordRecognitionManager()
 import { ChinaInfo } from './data/China.js'
 import { AustraliaInfo } from './data/Australia.js'
 import { BrazilInfo } from './data/Brazil.js'
@@ -174,14 +174,13 @@ export default {
 			console.log("stop")
 			this.innerAudioContext.pause();
 		},
-		preloadImage(){
+		preloadImage(imageSrc){
 			uni.showLoading({
 				'title':"加载中"
 			})
-			let that = this;
 			uni.previewImage({
-				current: that.imageSrc,
-				urls: [that.imageSrc],
+				current: imageSrc,
+				urls: [imageSrc],
 				indicator:'default',
 				loop:false,
 				success:function(res){

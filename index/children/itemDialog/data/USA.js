@@ -1,7 +1,7 @@
 const ip = "http://106.15.35.61:81/projects/world_map/images/America/"
 export const USAInfo = {
     "概览": {
-        image: ip + "america.jpg",
+        image: ip + "usa.jpg",
 
         description: {
             "1": "美利坚合众国（英语：The United States of America，United States，简称“美国”），是由华盛顿哥伦比亚特区、50个州和关岛等众多海外领土组成的联邦共和立宪制国家。其主体部分位于北美洲中部，美国中央情报局《世界概况》1989年至1996年初始版美国总面积是937.3万平方公里，人口3.33亿，通用英语，是一个移民国家。",
@@ -53,8 +53,7 @@ export const USAInfo = {
     },
 
     "典型动物": {
-        image: "",
-
+        image: ip+"animal.jpg",
         description: {
             "1": "美国的代表动物是“白头海雕”。白头海雕是大型猛禽，成年海雕体长可达1米，眼、嘴和脚为淡黄色，头、颈和尾部的羽毛为白色，身体其他部位的羽毛为暗褐色，十分雄壮美丽。",
             "2": "白头海雕主要栖息在海岸、湖沼和河流附近，以大马哈鱼、鳟鱼等大型鱼类和野鸭、海鸥等水鸟以及生活在水边的小型哺乳动物等为食，飞行能力很强。",
