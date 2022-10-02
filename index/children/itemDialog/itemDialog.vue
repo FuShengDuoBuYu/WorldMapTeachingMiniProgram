@@ -175,6 +175,8 @@ export default {
 			this.innerAudioContext.pause();
 		},
 		preloadImage(imageSrc){
+			clearInterval(this.soundTimer);
+			this.currentSound = this.pauseSound;
 			uni.showLoading({
 				'title':"加载中"
 			})

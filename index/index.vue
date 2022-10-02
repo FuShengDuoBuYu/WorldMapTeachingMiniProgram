@@ -10,11 +10,11 @@
 			<view>
 				<view z-index="99" style="display: flex;width:100%;justify-content:center;margin:auto;align-items: center;">
 					<text style="margin-right: 2vw; color:beige;font-size: small;width:fit-content">国家搜索</text>
-					<uni-combox @ifShowSelector="ifShowCanvas"  :candidates="candidates" placeholder="请输入要查找的国家" v-model="searchCountry"></uni-combox>
+					<uni-combox @ifShowSelector="ifShowCanvasCountryCondition"  :candidates="candidates" placeholder="请输入要查找的国家" v-model="searchCountry"></uni-combox>
 				</view>
 				<view z-index="99" style="display: flex;width:100%;justify-content:center;margin:auto;align-items: center;margin-top: 2vh;">
 					<text style="margin-right: 2vw;color:beige;font-size: small;">城市搜索</text>
-					<uni-combox @ifShowSelector="ifShowCanvas"  :candidates="cities" placeholder="请输入要查找的城市" v-model="searchCity"></uni-combox>
+					<uni-combox @ifShowSelector="ifShowCanvasCityCondition"  :candidates="cities" placeholder="请输入要查找的城市" v-model="searchCity"></uni-combox>
 				</view>
 			</view>
 			<view>
@@ -22,7 +22,7 @@
 			</view>
 		</view>
 		<view style="width: 100%;height: 700rpx;">
-			<worldMapChartVue v-show="ifShowCanvasChart" :chooseLocation="userChooseLoacation"></worldMapChartVue>
+			<worldMapChartVue ref="mapChart" v-show="ifShowCanvasChart" :chooseLocation="userChooseLoacation"></worldMapChartVue>
 		</view>
 		<view style="display: flex;justify-content:space-around;">
 			<text>您当前选择的是</text>
@@ -60,11 +60,21 @@
 			countryItems,
 			itemDialog
         },
+		computed:{
+			ifShowCanvasChart(){
+				return !this.ifShowCityCombox && !this.ifShowCountryCombox
+			}
+		},
 		//监听变化
 		watch: {
 			searchCountry(newVal, oldVal) {
-				
-				if (getCountryCities('').includes(this.searchCity)) {
+				//更新城市数组
+				if(newVal == ""){
+					this.cities = getCountryCities('')
+					this.searchCity = ""
+					this.recoverMapChart("")
+				}		
+				else if (getCountryCities('').includes(this.searchCity)) {
 					//如果是选择了城市造成的国家变化,不处理
 					if (oldVal == '') {
 						return;
@@ -86,7 +96,6 @@
 						this.searchCity = ''
 					}
 				}
-				
 			},
 			userChooseLoacation(newVal,oldVal){
 				if(ifNameIsCountry(newVal.match(/\(([^)]*)\)/)[1])==true){
@@ -101,6 +110,16 @@
 				}
 			},
 			searchCity(newVal,oldVal){
+				//取消选择城市
+				if(newVal == ""){
+					if(this.searchCountry==""){
+						return
+					}
+					else{
+						this.userChooseLoacation = this.searchCountry
+						this.recoverMapChart(this.searchCountry)
+					}
+				}
 				let items = getCountryCities('')
 				if (items.includes(newVal)) {
 					this.userChooseLoacation = newVal;
@@ -112,7 +131,7 @@
 				searchItem: '',
 				//用户要搜索的国家
 				searchCountry:'',
-				//候选城市
+				//候选国家
 				candidates: getWorldCountryNameList(),
 				//用户选择的地点
 				userChooseLoacation:'',
@@ -122,7 +141,8 @@
 				//用户的选择的国家地的名字
 				countryName:"暂未选择",
 				//是否展示canvas
-				ifShowCanvasChart:true,
+				ifShowCountryCombox:false,
+				ifShowCityCombox:false,
 				backgroundImage:images.bgImage,
 				//dialog要展示的内容
 				dialogContent: '',
@@ -146,8 +166,15 @@
 				this.title = data.item; 
 			}) 
 		},
+		onUnload() {
+			this.searchCountry = "";
+			this.recoverMapChart("")
+		},
 		//监听
 		methods: {
+			recoverMapChart(country){
+				this.$refs.mapChart.recoverMapChart(country);
+			},
 			//跳转页面
 			goto(url) {
 				uni.navigateTo({
@@ -171,8 +198,12 @@
 				
 			},  
 			//canvas显示与否
-			ifShowCanvas(ifShowSelect){
-				this.ifShowCanvasChart = !ifShowSelect
+			ifShowCanvasCityCondition(ifShowSelect){
+				console.log(ifShowSelect)
+				this.ifShowCityCombox = ifShowSelect
+			},
+			ifShowCanvasCountryCondition(ifShowSelect){
+				this.ifShowCountryCombox = ifShowSelect
 			},
 			//查看是否是重点国家
 			ifMarkCountry(countryName) {

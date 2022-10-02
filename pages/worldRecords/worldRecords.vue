@@ -106,6 +106,13 @@
 		},
 		onUnload(){
 			this.innerAudioContext.pause()
+			// this.$refs.echarts.recoverMapChart("")
+			this.options.title.text = "暂未选择";
+			clearInterval(this.timer);
+			this.options.series[0].data = [];
+			this.options.geo.regions = [];
+			this.chart.setOption(this.options);
+			this.$refs.echarts.setChart(this.chart);
 		},
 		//监听
 		methods: {
@@ -192,6 +199,8 @@
 			//地图图片
 			showMapImage(){
 				clearInterval(this.timer)
+				clearInterval(this.soundTimer);
+				this.currentSound = this.pauseSound;
 				uni.showLoading({
 					title: '加载中'
 				});
@@ -238,6 +247,8 @@
 					urls: [this.recordImage],
 					current: this.recordImage
 				});	
+				clearInterval(this.soundTimer);
+				this.currentSound = this.pauseSound;
 			},
 			//进入页面
 			switchTo(url){

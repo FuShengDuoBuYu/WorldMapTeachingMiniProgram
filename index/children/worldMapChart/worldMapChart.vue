@@ -22,7 +22,7 @@
 		//接收父组件的值
 		props:{
 			chooseLocation:String,
-			default:"中国(China)",
+			default:"",
 		},
 		//监听chooseLocation的变化
 		watch: {
@@ -139,11 +139,29 @@
 				this.$refs.echarts.setChart(this.chart);
 				//表格绑定点击事件
 				this.chart.on('click',function(e){
-					
 					uni.$emit("chooseLocation", {
 						country:getCountryNameByEnglish(e.name)
 					});
 				})
+			},
+			recoverMapChart(country){
+				//用户清空国家栏
+				if(country == ""){
+					clearInterval(this.timer)
+					this.options.title.text = "暂未选择"
+					console.log(country)
+					this.options.series[0].data = [];
+					this.options.geo.regions = [];
+					console.log(this.options)
+					//配置图表
+					this.chart.setOption(this.options);
+					this.$refs.echarts.setChart(this.chart);
+				}
+				//用户只清除城市栏
+				else{
+					console.log(this.chooseLocation)
+					this.refreshMapOptions(this.chooseLocation)
+				}
 			}
 		}
 	}

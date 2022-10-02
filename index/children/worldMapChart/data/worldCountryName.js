@@ -212,7 +212,7 @@ const EnglandCity = {
 
 //德国城市
 const GermanCity = {
-    "Berlin":["柏林[首都]",53,13.25, 0],
+    "Berlin":["柏林[首都]",13.25,53, 0],
 	"Munich":["慕尼黑", 11.55, 48.16, 0],
 	"Hamburg":["汉堡",  9.99, 53.56, 0]
 }
