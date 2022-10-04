@@ -4,7 +4,7 @@
 		<cover-view style="display: flex;justify-content: space-around;align-items: baseline;margin: 2vh;">
 			<cover-view class="titleCountry">{{countryName}}</cover-view>
 			<cover-view>
-				<cover-image style="height: 3vh;width: 3vh;" @click="startToSpeech" :src="currentSound"></cover-image>
+				<cover-image style="height: 3vh;width: 3vh;" @click="startToSpeechOrPause" :src="currentSound"></cover-image>
 			</cover-view>
 		</cover-view>
 		<cover-view class="drawer_title" v-if="title!=''">
@@ -169,11 +169,6 @@ export default {
 		})
 	},
 	methods: {
-		//停止播放
-		stopSpeech(){
-			console.log("stop")
-			this.innerAudioContext.pause();
-		},
 		preloadImage(imageSrc){
 			clearInterval(this.soundTimer);
 			this.currentSound = this.pauseSound;
@@ -191,10 +186,22 @@ export default {
 			})
 		},
 		
-		startToSpeech(){
+		startToSpeechOrPause(){
 			uni.showLoading({
 				title:'加载中'
 			})
+			if(this.innerAudioContext.paused==false){
+				this.innerAudioContext.stop()
+				uni.showToast({
+					title:'取消播放',
+					icon:'none',
+					duration:1500
+				})
+				clearInterval(this.soundTimer);
+				this.currentSound = this.pauseSound;
+				setTimeout(()=>{uni.hideLoading()},1500)
+				return
+			}
 			//分段播报textContent的内容
 			//获取textContent的所有key
 			let textContentKey = Object.keys(this.textContent);
