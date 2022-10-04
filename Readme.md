@@ -7,11 +7,12 @@
 #### 主页
 
 <div style="display:flex">
-    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/master/project_readme_images/readme/world_map/1.jpg" style="width:24%" />
-    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/master/project_readme_images/readme/world_map/2.jpg" style="width:24%;margin-left:1%" />
-    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/master/project_readme_images/readme/world_map/3.jpg" style="width:24%;margin-left:1%" />
-    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/master/project_readme_images/readme/world_map/4.jpg" style="width:24%;margin-left:1%" />
+    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/main/project_readme_images/readme/world_map/1.jpg" style="width:24%" />
+    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/main/project_readme_images/readme/world_map/2.jpg" style="width:24%;margin-left:1%" />
+    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/main/project_readme_images/readme/world_map/3.jpg" style="width:24%;margin-left:1%" />
+    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/main/project_readme_images/readme/world_map/4.jpg" style="width:24%;margin-left:1%" />
 </div>
+
 
 
 
@@ -29,10 +30,11 @@
 - 在搜索框的右边,有一个根据**国旗**/**国家名字**选择的地区的按钮,点击后可进入国旗/国家名的选择页面
 
 <div style="display:flex">
-    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/master/project_readme_images/readme/world_record/1.jpg" style="width:30%" />
-    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/master/project_readme_images/readme/world_record/2.jpg" style="width:30%;margin-left:5%" />
-    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/master/project_readme_images/readme/world_record/3.jpg" style="width:30%;margin-left:5%" />
+    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/main/project_readme_images/readme/world_record/1.jpg" style="width:30%" />
+    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/main/project_readme_images/readme/world_record/2.jpg" style="width:30%;margin-left:5%" />
+    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/main/project_readme_images/readme/world_record/3.jpg" style="width:30%;margin-left:5%" />
 </div>
+
 
 ##### 查找世界之最
 
@@ -108,8 +110,9 @@
 #### **国旗**/国家名选择页面
 
 <div style="display:flex;margin-left:38%">
-    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/master/project_readme_images/readme/choose_country/1.jpg" style="width:24%" />
+    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/main/project_readme_images/readme/choose_country/1.jpg" style="width:24%" />
 </div>
+
 
 - 根据item来选择要在世界地图上展示的是什么国家,当用户点击某个国家后,返回首页,首页展示对应
 
@@ -3174,7 +3177,7 @@ const worldRecords = {
 - **此处仅列举重要内容目录结构**
 
 <div style="display:flex">
-    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/master/project_readme_images/readme/dir.png" />
+    <img src="https://github.com/FuShengDuoBuYu/WorldMapTeachingMiniProgram/raw/main/project_readme_images/readme/dir.png" />
 </div>
 
 ```bash
