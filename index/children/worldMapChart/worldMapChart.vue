@@ -27,7 +27,7 @@
 		//监听chooseLocation的变化
 		watch: {
 			chooseLocation(newVal, oldVal) {
-				console.log(newVal)
+				console.log("Map 得到的显示val"+newVal)
 				setTimeout(function(){
 					uni.showLoading({
 						title:'请稍后',
@@ -58,7 +58,7 @@
 			//重设地图options
 			refreshMapOptions(locationName){
 				this.options.title.text = locationName;
-				let color = 'yellow'
+				let color = 'red'
 				clearInterval(this.timer)
 				if(ifNameIsCountry(locationName.match(/\(([^)]*)\)/)[1])==true){
 					//定时执行
@@ -67,12 +67,12 @@
 						let regions = [{
 							name: locationName.match(/\(([^)]*)\)/)[1],
 							itemStyle: {
-								areaColor: 'red',
+								areaColor: 'yellow',
 								borderColor:color,
-								borderWidth:1
+								borderWidth:2
 							}
 						}];
-						color = (color =='yellow'?'white':'yellow');
+						color = (color =='red'?'yellow':'red');
 						this.options.series[0].data = [];
 						this.options.geo.regions = regions;
 						//配置图表
@@ -88,9 +88,9 @@
 						let regions = [{
 							name: cityInfo[1],
 							itemStyle: {
-								areaColor: 'red',
+								areaColor: 'yellow',
 								borderColor:color,
-								borderWidth:1
+								borderWidth:2
 							}
 						}];
 						//设置city亮灯
@@ -100,7 +100,7 @@
 								value:[cityInfo[0][1],cityInfo[0][2],cityInfo[0][3]]
 							}
 						]
-						color = (color =='yellow'?'white':'yellow')
+						color = (color =='red'?'yellow':'red')
 						this.options.geo.regions = regions;
 						this.options.series[0].data = seriesData;
 						//配置图表
@@ -140,7 +140,8 @@
 				//表格绑定点击事件
 				this.chart.on('click',function(e){
 					uni.$emit("chooseLocation", {
-						country:getCountryNameByEnglish(e.name)
+						country:getCountryNameByEnglish(e.name),
+						emitPlace:"clickMap"
 					});
 				})
 			},

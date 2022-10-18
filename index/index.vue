@@ -37,7 +37,7 @@
 		<!--mask-->  
 		<cover-view class="drawer_screen" @click="showTheDialog" v-if="showDialog"></cover-view>  
 		<!--content-->
-		<cover-view class="drawer_box" v-if="showDialog">  
+		<cover-view class="drawer_box" v-if="showDialog"> 
 		  <!--drawer content-->  
 		  <cover-view class="drawer_content">  
 			<!-- 填充内容 -->
@@ -70,8 +70,10 @@
 			searchCountry(newVal, oldVal) {
 				//更新城市数组
 				if(newVal == ""){
+					this.countryName = "暂未选择"
 					this.cities = getCountryCities('')
 					this.searchCity = ""
+					this.userChooseLoacation = ""
 					this.recoverMapChart("")
 				}		
 				else if (getCountryCities('').includes(this.searchCity)) {
@@ -99,12 +101,10 @@
 			},
 			userChooseLoacation(newVal,oldVal){
 				if(ifNameIsCountry(newVal.match(/\(([^)]*)\)/)[1])==true){
-					this.searchItem = newVal
 					this.countryName = newVal
 				}
 				//根据英文名找到国家名字
 				else {
-					this.searchItem = newVal
 					this.searchCountry = getCountryNameByEnglish(findCityByName(newVal.match(/\(([^)]*)\)/)[1])[1])
 					this.countryName = this.searchCountry
 				}
@@ -124,11 +124,16 @@
 				if (items.includes(newVal)) {
 					this.userChooseLoacation = newVal;
 				}
+			},
+			showDialog(newVal,oldVal){
+				if(newVal==false){
+					this.$ref.dialog.stopSpeech();
+				}
 			}
 		},
 		data() {
 			return {
-				searchItem: '',
+				
 				//用户要搜索的国家
 				searchCountry:'',
 				//候选国家
@@ -152,13 +157,35 @@
 		},
 		onLoad() {
 			uni.$on('chooseLocation',(data)=>{
-				if(this.ifMarkCountry(data.country)){
+				//查看是否弹窗
+				if(this.ifMarkCountry(data.country,data.emitPlace)){
 					uni.$emit('showDialog', {
 						item:""
 					}) 
 				}
-				this.userChooseLoacation = data.country; 
-				this.searchCountry = data.country;
+				//是国旗选择过来的
+				if(data.emitPlace=="chooseCountry"){
+					setTimeout(function(){
+						uni.showLoading({
+							title:'请稍后',
+						})
+					},500)
+					setTimeout(function () {
+						uni.hideLoading();
+					}, 1500);
+					this.$refs.mapChart.refreshMapOptions(data.country)
+					this.searchCity = "";
+					this.userChooseLoacation = data.country;
+					this.searchCountry = data.country;
+				}
+				//用户点击图表
+				else{
+					//不弹窗就修改
+					if(!this.ifMarkCountry(data.country,data.emitPlace)){
+						this.userChooseLoacation = data.country;
+						this.searchCountry = data.country;
+					}
+				}
 				
 			});
 			uni.$on('showDialog',(data)=>{
@@ -168,6 +195,7 @@
 		},
 		onUnload() {
 			this.searchCountry = "";
+			this.userChooseLoacation = "";
 			this.recoverMapChart("")
 		},
 		//监听
@@ -194,6 +222,10 @@
 				this.showDialog = !this.showDialog
 				if(this.showDialog==false){
 					this.$refs.dialog.stopSpeech();
+					this.$refs.dialog.innerAudioContext = "";
+				}
+				else{
+					this.$refs.dialog.innerAudioContext= uni.createInnerAudioContext()
 				}
 				
 			},  
@@ -206,7 +238,9 @@
 				this.ifShowCountryCombox = ifShowSelect
 			},
 			//查看是否是重点国家
-			ifMarkCountry(countryName) {
+			ifMarkCountry(countryName,emitPlace) {
+				console.log(countryName)
+				console.log(emitPlace)
 				let country = countryName.match(/\(([^)]*)\)/)[1]
 				//查看用户点击的是否是6个重点国家
 				if(
@@ -216,7 +250,9 @@
 					country=="Australia"||
 					country=="United States"||
 					country=="Brazil"
-				)&&countryName==this.userChooseLoacation){
+				)&&
+				this.searchCity==""?countryName==this.userChooseLoacation:countryName==this.searchCountry
+				&&"clickMap"==emitPlace){
 					return true
 				}
 				else{

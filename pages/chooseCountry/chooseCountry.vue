@@ -22,7 +22,8 @@ import {getWorldCountryNameList} from '@/index/children/worldMapChart/data/world
 		methods: {
 			chooseCountry(location){
 				uni.$emit("chooseLocation",{
-					country:location
+					country:location,
+					emitPlace:"chooseCountry"
 				});
 				uni.navigateBack({
 					delta:1
